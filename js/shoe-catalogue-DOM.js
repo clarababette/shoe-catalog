@@ -42,12 +42,11 @@ Handlebars.registerHelper("displayColor", (color) => {
   let thisColor = color.split("-");
   return thisColor[0];
 });
-
 theseShoes = shoeData["shoe"];
 theseShoes.forEach((thisShoe) => {
   rule = "." + thisShoe.colorname + "{ --mid: " + thisShoe.color + "}";
-  var styles = document.CSS;
-  styles.insertRule(rule);
+
+  document.styleSheets[0].insertRule(rule);
 });
 
 document.addEventListener("DOMContentLoaded", function () {
