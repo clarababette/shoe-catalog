@@ -1,11 +1,199 @@
+* {
+  line-height: 1.5;
+  margin: 0;
+  font-family: "Palanquin", sans-serif;
+  text-align: center;
+  z-index: inherit;
+}
+
+body {
+  background-color: #6fb7bf;
+}
+
+h1 {
+  font-family: "Sofia", cursive;
+  padding: 2em;
+}
+
+.shoe-stock {
+  margin-left: auto;
+  margin-right: auto;
+  width: 80vw;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+}
+
+.shoe-card {
+  margin: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 200px;
+  /* height: 270px; */
+  /* background-color: whitesmoke; */
+  justify-content: flex-end;
+  border-radius: 10px;
+  display: inline-flex;
+  flex-direction: column;
+  z-index: 0;
+  float: left;
+  position: relative;
+}
+
+.shoe-card svg {
+  width: 150px;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: 10px;
+  z-index: inherit;
+}
+
+.brand {
+  text-align: center;
+}
+.colorname {
+  text-align: center;
+  text-transform: capitalize;
+}
+.price {
+  text-align: center;
+}
+
 .light {
-  fill: #0069b1;
+  fill: var(--mid);
+  filter: brightness(120%);
 }
 
 .mid {
-  fill: #0061a0;
+  fill: var(--mid);
 }
 
 .dark {
-  fill: #00558c;
+  fill: var(--mid);
+  filter: brightness(80%);
+}
+
+.green {
+  --light: #038c3e;
+  --mid: #067335;
+  --dark: #05592a;
+}
+
+.black {
+  --light: #212121;
+  --mid: #171717;
+  --dark: #000000;
+}
+
+.blue {
+  --light: #0069b1;
+  --mid: #0061a0;
+  --dark: #00558c;
+}
+
+.orange {
+  --light: #f2a03d;
+  --mid: #f28241;
+  --dark: #db693b;
+}
+.pink {
+  --light: #fb9eb2;
+  --mid: #f65275;
+  --dark: #c2405c;
+}
+.purple {
+  --light: #9381d4;
+  --mid: #8575bf;
+  --dark: #7365a6;
+}
+
+.red {
+  --light: #ca4f65;
+  --mid: #bf1131;
+  --dark: #8c0d24;
+}
+
+.shoe-card:hover {
+  margin-bottom: -110px;
+  z-index: 10;
+
+  background-color: snow;
+  box-shadow: 0 0 50px -20px black;
+  justify-content: flex-start;
+  /* margin-top: 30px; */
+}
+/* .shoe-card:hover::before {
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  position: absolute;
+} */
+
+.shoe-card:hover .more {
+  display: block;
+}
+
+button {
+  line-height: 0.8em;
+  height: 1.5em;
+  vertical-align: middle;
+  padding-bottom: 0.25em;
+}
+
+.more {
+  display: none;
+}
+
+.sizes {
+  width: 200px;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.sizes button {
+  border: none;
+  border-radius: 0.25em;
+  color: whitesmoke;
+}
+
+.out-of-stock {
+  background-color: gray;
+  position: relative;
+}
+
+.out-of-stock::after {
+  content: "X";
+  top: 0.3em;
+  opacity: 50%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  color: red;
+}
+
+.in-stock {
+  background-color: teal;
+}
+
+/* .in-stock:active {
+  background-color: green;
+} */
+
+.add-shoe {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-weight: 400;
+  border: none;
+  background-color: salmon;
+  border-radius: 0.2em;
 }

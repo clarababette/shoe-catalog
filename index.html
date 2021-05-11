@@ -5,37 +5,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sofia&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
+    <title>Shoe Catalogue</title>
   </head>
   <body>
-    <svg viewBox="0 0 512 512">
-      <use href="#dr-martens"></use>
-    </svg>
-    <svg viewBox="0 0 512 512">
-      <use href="#vans"></use>
-    </svg>
-    <svg viewBox="0 0 512 512">
-      <use href="#crocs"></use>
-    </svg>
-    <svg viewBox="0 0 512 512">
-      <use href="#converse"></use>
-    </svg>
-    <svg viewBox="0 0 512 512">
-      <use href="#nike"></use>
-    </svg>
-    <div id="test"></div>
+    <h1>Lubabalo's Shoe Emporium</h1>
+    <div class="shoe-stock">
 
+      </div>
+
+      <script src="js/shoe-data.js" charset="utf-8"></script>
     <script src="js/shoe-catalogue.js" charset="utf-8"></script>
     <script src="js/shoe-catalogue-DOM.js" charset="utf-8"></script>
-    <script src="js/shoe-data.js" charset="utf-8"></script>
     <script type="text/x-template" id="testTemplate">
-      {{{shoe}}}
+      {{#each shoe}}
+      <div class="shoe-card" >
+        <svg class={{colorname}} viewBox={{{viewBox brand}}}>
+          <use href={{icon brand}}></use>
+        </svg>
+        <h2 class="brand">{{brand}}</h2>
+        <h3 class="colorname">{{displayColor colorname}}</h3>
+        <h3 class="price">R{{price}}</h3>
+        <div class="more">
+  
+          <div class="sizes">
+            <button class={{stockCheck stock.four}}>4</button>
+            <button class={{stockCheck stock.five}}>5</button>
+            <button class={{stockCheck stock.six}}>6</button>
+            <button class={{stockCheck stock.seven}}>7</button>
+            <button class={{stockCheck stock.eight}}>8</button>
+          </div>
+          <span></span>
+          <button class="add-shoe">Add to cart</button>
+        </div>
+      </div>
+      {{/each}}
     </script>
   </body>
 </html>
 
 <!-- SHOE SVG CODE -->
-<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+<svg display="none" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
   <symbol id="nike">
     <defs />
     <path class="no-change" d="M232.13 161.23l-50.85-38.15a12.96 12.96 0 00-15.75.15 41.18 41.18 0 00-14.88 41.28l3.55 16.17" fill="#333f61" fill-rule="nonzero" />
@@ -68,7 +81,7 @@
     <g class="dark" fill="none" fill-rule="nonzero">
       <path d="M409.47 280.95l-35.19-7.6a286.46 286.46 0 01-174.8-116.62l-17.44-25.12a27.37 27.37 0 00-22.48-11.77h-42.58a405.46 405.46 0 00107.98 130.52c73.05 57.63 147.63 75.23 184.71 81.4v-49.82l-.2-.99zM409.67 331.76v4.74-4.74z" />
     </g>
-    <path class="" d="M94.88 177.9l9.82 19.95c.15.3.44.5.77.55l21.98 3.2c.83.12 1.16 1.15.56 1.74l-15.9 15.52c-.24.23-.35.57-.3.9l3.76 21.91c.14.83-.73 1.47-1.48 1.07L94.44 232.4c-.3-.16-.65-.16-.95 0l-19.65 10.34c-.75.4-1.62-.24-1.48-1.07l3.76-21.91c.05-.33-.06-.67-.3-.9l-15.9-15.53c-.6-.58-.27-1.6.56-1.73l21.98-3.2c.33-.04.62-.25.77-.55l9.82-19.94a1.02 1.02 0 011.83 0z" fill="#039" fill-rule="nonzero" />
+    <path class="" d="M94.88 177.9l9.82 19.95c.15.3.44.5.77.55l21.98 3.2c.83.12 1.16 1.15.56 1.74l-15.9 15.52c-.24.23-.35.57-.3.9l3.76 21.91c.14.83-.73 1.47-1.48 1.07L94.44 232.4c-.3-.16-.65-.16-.95 0l-19.65 10.34c-.75.4-1.62-.24-1.48-1.07l3.76-21.91c.05-.33-.06-.67-.3-.9l-15.9-15.53c-.6-.58-.27-1.6.56-1.73l21.98-3.2c.33-.04.62-.25.77-.55l9.82-19.94a1.02 1.02 0 011.83 0z" fill="#f2edec" fill-rule="nonzero" />
     <g class="" fill="#f2edec" fill-rule="nonzero">
       <path
         d="M195.12 193.81l21.04-14.12c.23-.15.45-.31.66-.49-3.42-4-6.73-8.11-9.94-12.32l-20.56 13.79a7.92 7.92 0 008.8 13.14zM239.18 202.63c-3.84-3.6-7.58-7.3-11.23-11.12l-.14.14-16.43 16.99a7.92 7.92 0 005.68 13.41c2.06 0 4.13-.8 5.68-2.4l16.42-17 .02-.02zM167.8 165.1c.95 0 1.93-.18 2.88-.56l25.14-9.88a7.92 7.92 0 001.62-.88l-9.14-13.16-23.4 9.2a7.92 7.92 0 002.9 15.27zM237.94 240.67a7.86 7.86 0 0011.12-1.01l13.3-15.98c.27-.34.51-.69.72-1.05a286.86 286.86 0 01-12.26-9.72c-.21.2-.42.41-.6.64l-13.3 15.98a7.92 7.92 0 001.02 11.14zM265.33 262.17a7.86 7.86 0 0010.76-3L287.44 239a287.05 287.05 0 01-13.32-8.51l-.3.46-11.5 20.44a7.92 7.92 0 003 10.77zM295.1 279.65a7.88 7.88 0 0010.03-4.94l7.56-22.23a286.15 286.15 0 01-14.16-7.14c-.18.35-.35.72-.48 1.1l-7.88 23.17a7.92 7.92 0 004.93 10.04zM327.1 294.5a7.9 7.9 0 009.44-5.97l5.46-24.16c-4.96-1.7-9.85-3.53-14.69-5.5-.3.6-.55 1.24-.7 1.93l-5.48 24.23a7.91 7.91 0 005.96 9.47zM355.01 272.61l-1.58 21.09a7.9 7.9 0 1015.76 1.18l1.58-21.08c.03-.43.02-.84-.02-1.25a286.96 286.96 0 01-14.45-3.7 7.88 7.88 0 00-1.29 3.76z"
