@@ -7,59 +7,75 @@
 }
 
 body {
-  background-color: #6fb7bf;
+  background-color: #789ebf;
+  overflow: scroll;
 }
 
 h1 {
   font-family: "Sofia", cursive;
-  padding: 1.5em;
+
   padding-top: 0.5em;
   padding-bottom: 0.5em;
-  text-align: left;
-  font-size: 3em;
+  text-align: center;
+  font-size: 40px;
+  color: #347038;
+  text-shadow: 0 0 10px rgb(206, 247, 223);
+  position: fixed;
+  width: 100vw;
+  background-color: #789ebf;
+
+  z-index: 11;
 }
 
 .shop {
   display: flex;
+  margin-bottom: 150px;
 }
 
 .search {
   display: flex;
   margin-left: 50px;
   margin-right: auto;
-  width: 120px;
+  width: 170px;
   justify-content: start;
   flex-direction: column;
-  background-color: cornflowerblue;
+  background-color: #bf8cb7;
   padding: 1em;
+  padding-top: 110px;
   height: fit-content;
   box-shadow: 0 0 50px -40px black;
+  position: fixed;
+
+  z-index: 12;
 }
 .cart {
   margin-right: 50px;
-  margin-left: auto;
-  width: 220px;
-  background-color: cornflowerblue;
+  margin-left: calc(100vw - 250px);
+  width: 170px;
+  background-color: #bf8cb7;
   padding: 1em;
+  padding-top: 110px;
   height: fit-content;
   box-shadow: 0 0 50px -40px black;
+  position: fixed;
+  z-index: 12;
 }
 .in-cart {
   display: grid;
-  grid-template-columns: 1.5fr repeat(2, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   justify-content: center;
   align-items: center;
   text-align: left;
   padding: 0.5em;
   margin-bottom: 0.5em;
 
-  background-color: lightskyblue;
+  background-color: #d99ed0;
 }
 
 .cart svg {
-  margin-left: 80px;
-  margin-right: 80px;
-  width: 60px;
+  margin-left: 50px;
+  margin-right: 50px;
+  width: 70px;
 }
 
 .cart h2 {
@@ -72,7 +88,7 @@ h1 {
 }
 
 .cart-brand {
-  grid-column: span 1;
+  grid-column: span 2;
 }
 .cart-color {
   grid-column: span 1;
@@ -81,7 +97,7 @@ h1 {
   grid-column: span 1;
 }
 .cart-qty {
-  grid-column: span 2;
+  grid-column: span 1;
 }
 .cart-price {
   grid-column: span 1;
@@ -148,13 +164,16 @@ label {
 }
 
 .shoe-stock {
-  margin-left: auto;
-  margin-right: auto;
-  width: calc(100% - 440px);
+  margin-top: 150px;
+  margin-left: 250px;
+  margin-right: 250px;
+  width: auto;
   min-height: 100vh;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  color: #030140;
+  min-width: 524px;
 }
 
 .shoe-card {
@@ -206,52 +225,12 @@ label {
   filter: brightness(80%);
 }
 
-.green {
-  --light: #038c3e;
-  --mid: #067335;
-  --dark: #05592a;
-}
-
-.black {
-  --light: #212121;
-  --mid: #171717;
-  --dark: #000000;
-}
-
-.blue {
-  --light: #0069b1;
-  --mid: #0061a0;
-  --dark: #00558c;
-}
-
-.orange {
-  --light: #f2a03d;
-  --mid: #f28241;
-  --dark: #db693b;
-}
-.pink {
-  --light: #fb9eb2;
-  --mid: #f65275;
-  --dark: #c2405c;
-}
-.purple {
-  --light: #9381d4;
-  --mid: #8575bf;
-  --dark: #7365a6;
-}
-
-.red {
-  --light: #ca4f65;
-  --mid: #bf1131;
-  --dark: #8c0d24;
-}
-
 .shoe-card:hover {
   margin-bottom: -110px;
   z-index: 10;
 
   background-color: snow;
-  box-shadow: 0 0 50px -20px black;
+  box-shadow: 0 0 40px -20px black;
   justify-content: flex-start;
   /* margin-top: 30px; */
 }
