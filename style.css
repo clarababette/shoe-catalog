@@ -2,7 +2,7 @@
   line-height: 1.5;
   margin: 0;
   font-family: "Palanquin", sans-serif;
-  text-align: center;
+
   z-index: inherit;
 }
 
@@ -12,23 +12,156 @@ body {
 
 h1 {
   font-family: "Sofia", cursive;
-  padding: 2em;
+  padding: 1.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  text-align: left;
+  font-size: 3em;
+}
+
+.shop {
+  display: flex;
+}
+
+.search {
+  display: flex;
+  margin-left: 50px;
+  margin-right: auto;
+  width: 120px;
+  justify-content: start;
+  flex-direction: column;
+  background-color: cornflowerblue;
+  padding: 1em;
+  height: fit-content;
+  box-shadow: 0 0 50px -40px black;
+}
+.cart {
+  margin-right: 50px;
+  margin-left: auto;
+  width: 220px;
+  background-color: cornflowerblue;
+  padding: 1em;
+  height: fit-content;
+  box-shadow: 0 0 50px -40px black;
+}
+.in-cart {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+
+  background-color: lightskyblue;
+}
+
+.cart svg {
+  margin-left: 80px;
+  margin-right: 80px;
+  width: 60px;
+}
+
+.cart h2 {
+  text-align: center;
+  padding-bottom: 0.25em;
+}
+
+.cart h3 {
+  text-align: center;
+}
+
+.cart-brand {
+  grid-column: span 1;
+}
+.cart-color {
+  grid-column: span 1;
+}
+.cart-size {
+  grid-column: span 1;
+}
+.cart-qty {
+  grid-column: span 2;
+}
+.cart-price {
+  grid-column: span 1;
+}
+
+.cart button {
+  background-color: salmon;
+  border: none;
+  font-size: 1em;
+  height: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin: 0.5em;
+}
+
+/* .search div {
+  display: inline-block;
+  padding-bottom: 0.5em;
+  border-bottom: solid black 1px;
+} */
+
+.brand-option {
+  display: inline-block;
+  text-align: left;
+  width: 150px;
+  border: none;
+}
+
+.brand-option div {
+  text-align: left;
+}
+.color-option {
+  text-align: left;
+  width: 150px;
+  border: none;
+}
+.color-option div {
+  text-align: left;
+}
+
+.size-option {
+  display: inline-block;
+  text-align: left;
+  border: none;
+}
+
+.size-option div {
+  display: inline-block;
+  text-align: left;
+  width: 70px;
+}
+
+label {
+  padding-left: 0.5em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+}
+
+.search h2 {
+  line-height: 1;
+  vertical-align: middle;
+  font-size: 1.5em;
+  padding: 0.5em;
 }
 
 .shoe-stock {
   margin-left: auto;
   margin-right: auto;
-  width: 80vw;
+  width: calc(100% - 440px);
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: repeat(4, auto);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 .shoe-card {
   margin: 20px;
   margin-top: 0;
   margin-bottom: 0;
-  width: 200px;
+  width: 150px;
   /* height: 270px; */
   /* background-color: whitesmoke; */
   justify-content: flex-end;
@@ -41,7 +174,7 @@ h1 {
 }
 
 .shoe-card svg {
-  width: 150px;
+  width: 100px;
   margin-left: 25px;
   margin-right: 25px;
   margin-top: 10px;
@@ -148,7 +281,7 @@ button {
 }
 
 .sizes {
-  width: 200px;
+  width: 150px;
   display: flex;
   justify-content: space-evenly;
   margin-top: 10px;

@@ -42,7 +42,8 @@ Handlebars.registerHelper("displayColor", (color) => {
   let thisColor = color.split("-");
   return thisColor[0];
 });
-theseShoes = shoeData["shoe"];
+
+let theseShoes = shoeData["shoe"];
 theseShoes.forEach((thisShoe) => {
   rule = "." + thisShoe.colorname + "{ --mid: " + thisShoe.color + "}";
 
@@ -50,9 +51,12 @@ theseShoes.forEach((thisShoe) => {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  var templateSource = document.querySelector("#testTemplate").innerHTML;
-  var testTemplate = Handlebars.compile(templateSource);
-
-  var shoeStock = document.querySelector(".shoe-stock");
-  shoeStock.innerHTML = testTemplate(shoeData);
+  let templateSource = document.querySelector("#searchTemplate").innerHTML;
+  let searchTemplate = Handlebars.compile(templateSource);
+  let search = document.querySelector(".search");
+  search.innerHTML = searchTemplate(shoeData);
+  templateSource = document.querySelector("#stockTemplate").innerHTML;
+  let stockTemplate = Handlebars.compile(templateSource);
+  let shoeStock = document.querySelector(".shoe-stock");
+  shoeStock.innerHTML = stockTemplate(shoeData);
 });
