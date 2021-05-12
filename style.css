@@ -41,7 +41,7 @@ h1 {
   flex-direction: column;
   background-color: #bf8cb7;
   padding: 1em;
-  padding-top: 110px;
+  padding-top: 90px;
   height: fit-content;
   box-shadow: 0 0 50px -40px black;
   position: fixed;
@@ -54,7 +54,7 @@ h1 {
   width: 170px;
   background-color: #bf8cb7;
   padding: 1em;
-  padding-top: 110px;
+  padding-top: 90px;
   height: fit-content;
   box-shadow: 0 0 50px -40px black;
   position: fixed;
