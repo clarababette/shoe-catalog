@@ -1,64 +1,69 @@
 * {
-  line-height: 1.5;
   margin: 0;
   font-family: "Palanquin", sans-serif;
-
   z-index: inherit;
+  color: #0e2f33;
+}
+
+:root {
+  --blue: #32aaba;
+  --lightblue: #71bcc6;
+  --offwhite: #f4ede8;
+  --pink: #e6646e;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
 }
 
 body {
-  background-color: #789ebf;
+  background-image: url("background.png");
+  background-size: cover;
   overflow: scroll;
 }
 
-h1 {
-  font-family: "Sofia", cursive;
-
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
-  text-align: center;
-  font-size: 40px;
-  color: #347038;
-  text-shadow: 0 0 10px rgb(206, 247, 223);
-  position: fixed;
-  width: 100vw;
-  background-color: #789ebf;
-
-  z-index: 11;
+#logo {
+  width: 500px;
+  margin-top: 20px;
+  margin-left: calc((100vw - 500px) / 2);
+  margin-right: auto;
 }
 
 .shop {
-  display: flex;
   margin-bottom: 150px;
+  display: grid;
+  grid-template-columns: 250px 1fr 250px;
 }
 
 .search {
+  color: #0e2f33;
   display: flex;
-  margin-left: 50px;
-  margin-right: auto;
-  width: 170px;
+  margin-top: -50px;
+  grid-column: 1 / span 1;
   justify-content: start;
   flex-direction: column;
-  background-color: #bf8cb7;
-  padding: 1em;
-  padding-top: 90px;
+  background-color: var(--lightblue);
+  border: solid 1em var(--blue);
+  padding: 1.5em;
+  margin-left: 1em;
   height: fit-content;
-  box-shadow: 0 0 50px -40px black;
-  position: fixed;
-
-  z-index: 12;
+  border-radius: 0.1em;
+  box-shadow: 0 0 0.1em #342419;
 }
+
 .cart {
-  margin-right: 50px;
-  margin-left: calc(100vw - 250px);
-  width: 170px;
-  background-color: #bf8cb7;
+  color: #0e2f33;
+  margin-right: 1em;
+  margin-top: -50px;
+  background-color: var(--blue);
   padding: 1em;
-  padding-top: 90px;
+  grid-column: 3 / span 1;
   height: fit-content;
-  box-shadow: 0 0 50px -40px black;
-  position: fixed;
-  z-index: 12;
+  border-radius: 0.1em;
+  box-shadow: 0 0 0.1em #342419;
+  transition: display 2s;
 }
 .in-cart {
   display: grid;
@@ -68,13 +73,12 @@ h1 {
   text-align: left;
   padding: 0.5em;
   margin-bottom: 0.5em;
-
-  background-color: #d99ed0;
+  background-color: var(--lightblue);
 }
 
 .cart svg {
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 70px;
+  margin-right: 70px;
   width: 70px;
 }
 
@@ -104,38 +108,56 @@ h1 {
 }
 
 .cart button {
-  background-color: salmon;
+  background-color: var(--pink);
   border: none;
+  color: var(--offwhite);
+  border-radius: 0.1em;
   font-size: 1em;
   height: 2em;
-  padding-left: 1em;
-  padding-right: 1em;
-  margin: 0.5em;
+  padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 0;
+  width: 100%;
+  box-shadow: 0 0 0.1em #0e2f33;
+  transition: display 2s;
 }
 
-/* .search div {
-  display: inline-block;
-  padding-bottom: 0.5em;
-  border-bottom: solid black 1px;
-} */
+.clear-filter {
+  background-color: var(--pink);
+  border: none;
+  color: var(--offwhite);
+  border-radius: 0.1em;
+  font-size: 1em;
+  height: 2em;
+  padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 0;
+  width: 100%;
+  box-shadow: 0 0 0.1em #0e2f33;
+}
+.filter {
+  background-color: var(--pink);
+  border: none;
+  color: var(--offwhite);
+  border-radius: 0.1em;
+  font-size: 1em;
+  height: 2em;
+  padding: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 0;
+  width: 100%;
+  box-shadow: 0 0 0.1em #0e2f33;
+}
 
 .brand-option {
   display: inline-block;
   text-align: left;
-  width: 150px;
   border: none;
 }
 
-.brand-option div {
-  text-align: left;
-}
 .color-option {
   text-align: left;
-  width: 150px;
   border: none;
-}
-.color-option div {
-  text-align: left;
 }
 
 .size-option {
@@ -144,36 +166,43 @@ h1 {
   border: none;
 }
 
-.size-option div {
-  display: inline-block;
-  text-align: left;
-  width: 70px;
+label {
+  display: block;
+  line-height: 1;
+  font-size: 1em;
+  height: 1.5em;
+  width: 100%;
 }
 
-label {
-  padding-left: 0.5em;
-  padding-right: 1em;
-  padding-bottom: 1em;
+label div {
+  display: inline-block;
+  height: 0.8em;
+  width: 0.8em;
+  background-color: var(--offwhite);
+  border-radius: 50%;
+  margin: 0;
 }
 
 .search h2 {
-  line-height: 1;
+  line-height: 1.5;
   vertical-align: middle;
   font-size: 1.5em;
-  padding: 0.5em;
+}
+.search h3 {
+  vertical-align: middle;
+  padding-top: 1em;
+  padding-bottom: 0.35em;
 }
 
 .shoe-stock {
-  margin-top: 150px;
-  margin-left: 250px;
-  margin-right: 250px;
   width: auto;
-  min-height: 100vh;
+
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  align-items: flex-start;
+  align-content: flex-start;
   color: #030140;
-  min-width: 524px;
 }
 
 .shoe-card {
@@ -181,10 +210,7 @@ label {
   margin-top: 0;
   margin-bottom: 0;
   width: 150px;
-  /* height: 270px; */
-  /* background-color: whitesmoke; */
   justify-content: flex-end;
-  border-radius: 10px;
   display: inline-flex;
   flex-direction: column;
   z-index: 0;
@@ -228,21 +254,11 @@ label {
 .shoe-card:hover {
   margin-bottom: -110px;
   z-index: 10;
-
-  background-color: snow;
-  box-shadow: 0 0 40px -20px black;
+  background-color: var(--offwhite);
   justify-content: flex-start;
-  /* margin-top: 30px; */
+  border-radius: 0.2em;
+  box-shadow: 0 0.1em 0.2em -0.1em #78543a;
 }
-/* .shoe-card:hover::before {
-  content: "";
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 9;
-  position: absolute;
-} */
 
 .shoe-card:hover .more {
   display: block;
@@ -252,7 +268,7 @@ button {
   line-height: 0.8em;
   height: 1.5em;
   vertical-align: middle;
-  padding-bottom: 0.25em;
+  padding-bottom: 0.1em;
 }
 
 .more {
@@ -267,35 +283,30 @@ button {
   margin-bottom: 10px;
 }
 
-.sizes button {
-  border: none;
-  border-radius: 0.25em;
-  color: whitesmoke;
-}
-
 .out-of-stock {
-  background-color: gray;
+  background: none;
   position: relative;
+  color: #0e2f33;
+  z-index: 100;
+  border: none;
 }
 
-.out-of-stock::after {
+.out-of-stock::before {
   content: "X";
-  top: 0.3em;
-  opacity: 50%;
+  top: 0.25em;
+  z-index: -1;
+  font-size: 1.25em;
   bottom: 0;
   left: 0;
   right: 0;
   position: absolute;
-  color: red;
+  color: var(--pink);
 }
 
 .in-stock {
-  background-color: teal;
+  border: solid 0.1em var(--blue);
+  border-radius: 0.1em;
 }
-
-/* .in-stock:active {
-  background-color: green;
-} */
 
 .add-shoe {
   display: block;
@@ -306,6 +317,87 @@ button {
   text-transform: uppercase;
   font-weight: 400;
   border: none;
-  background-color: salmon;
-  border-radius: 0.2em;
+  color: var(--offwhite);
+  background-color: var(--pink);
+  border-radius: 0.1em;
+  box-shadow: 0 0 0.05em #78543a;
+}
+
+.selected-size {
+  background-color: var(--blue);
+  box-shadow: 0 0 0.05em #78543a;
+}
+
+.stock-level {
+  padding: 0.1em;
+  text-align: center;
+}
+
+.cart-color {
+  text-transform: capitalize;
+}
+
+.empty-cart {
+  display: none;
+}
+
+@media only screen and (max-width: 999px) {
+  #logo {
+    width: 60vw;
+    margin-top: 20px;
+    margin-left: 20vw;
+    margin-right: 20vw;
+  }
+
+  .shop {
+    width: 80vw;
+    display: grid;
+    grid-template-columns: 1fr;
+    margin-left: 10vw;
+    margin-left: 10vw;
+  }
+
+  .search {
+    display: none;
+  }
+
+  .cart {
+    display: none;
+  }
+
+  .shoe-stock {
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    align-content: flex-start;
+    color: #030140;
+  }
+
+  .shoe-card {
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    grid-template-rows: repeat(5, auto);
+    z-index: 0;
+    position: relative;
+  }
+
+  .shoe-card svg {
+    grid-row: 1 / span 5;
+    grid-column: 1 / span 1;
+    width: 60px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 5px;
+    z-index: inherit;
+  }
+
+  .more {
+    display: block;
+  }
 }

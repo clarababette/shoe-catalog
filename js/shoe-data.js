@@ -89,7 +89,7 @@ const shoeData = {
       },
     },
     {
-      brand: "Dr Martens",
+      brand: "Dr-Martens",
       colorname: "green-drmartens",
       color: "#067335",
       price: 600,
@@ -99,7 +99,7 @@ const shoeData = {
       },
     },
     {
-      brand: "Dr Martens",
+      brand: "Dr-Martens",
       colorname: "pink-drmartens",
       color: "#df677d",
       price: 600,
@@ -108,7 +108,7 @@ const shoeData = {
       },
     },
     {
-      brand: "Dr Martens",
+      brand: "Dr-Martens",
       colorname: "orange-drmartens",
       color: "#f28241",
       price: 600,
@@ -117,7 +117,7 @@ const shoeData = {
       },
     },
     {
-      brand: "Dr Martens",
+      brand: "Dr-Martens",
       colorname: "blue-drmartens",
       color: "#0061A0",
       price: 600,
@@ -137,24 +137,5 @@ const shoeData = {
   ],
   brands: ["Crocs", "Converse", "Vans", "Dr Martens", "Nike"],
   colors: ["blue", "red", "green", "pink", "black", "orange"],
-  sizes: [4, 5, 6, 7, 8],
-};
-
-//[light shade, mid shade, dark shade]
-const shoe_colors = {
-  black: ["#212121", "#171717", "#000000"],
-  blue: ["#0069B1", "#0061A0", "#00558C"],
-  green: ["#038c3e", "#067335", "#05592a"],
-  orange: ["#f2a03d", "#f28241", "#db693b"],
-  pink: ["#df677d", "#d92344", "#a61b34"],
-  purple: ["#9381d4", "#8575bf", "#7365a6"],
-  red: ["#ca4f65", "#bf1131", "#8c0d24"],
-};
-
-const viewBox = {
-  drmartens: "0 0 522 512",
-  vans: "-5 -154 522 512",
-  crocs: "-5 -139 522 512",
-  converse: "-5 -112 522 512",
-  nike: "-5 -117 522 512",
+  sizes: { four: 4, five: 5, six: 6, seven: 7, eight: 8 },
 };

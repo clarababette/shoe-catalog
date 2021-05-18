@@ -12,7 +12,7 @@
     <title>Shoe Catalogue</title>
   </head>
   <body>
-    <h1>Lubabalo's Shoe Emporium</h1>
+    <img id="logo" src="logo.png" />
     <div class="shop">
       <div class="search"></div>
       <div class="shoe-stock"></div>
@@ -21,23 +21,10 @@
           <use href="#cart"></use>
         </svg>
         <h2>Your cart</h2>
-        <div class="in-cart">
-          <div class="cart-brand">Converse</div>
-          <div class="cart-color">Green</div>
-          <div class="cart-size">Size 5</div>
-          <div class="cart-qty">Qty: 1</div>
-          <div class="cart-price">R425</div>
-        </div>
-        <div class="in-cart">
-          <div class="cart-brand">Converse</div>
-          <div class="cart-color">Green</div>
-          <div class="cart-size">Size 5</div>
-          <div class="cart-qty">Qty: 1</div>
-          <div class="cart-price">R425</div>
-        </div>
-        <h3>Total: R850</h3>
-        <button>Proceed to checkout</button>
-        <button>Clear cart</button>
+        <div class="my-cart"></div>
+
+        <button class="checkout">Proceed to checkout</button>
+        <button class="clear-cart">Clear cart</button>
       </div>
     </div>
 
@@ -46,34 +33,40 @@
     <script src="js/shoe-catalogue-DOM.js" charset="utf-8"></script>
     <script type="text/x-template" id="searchTemplate">
       <h2>Refine by:</h2>
-      <h2>Brand</h2>
+      <h3>Brand</h3>
       <div class="brand-option">
         {{#each brands}}
-        <div>
-          <input type="radio" name="brand" value={{this}} id={{this}} /><label for={{this}}>{{this}}</label>
-        </div>
+        <label for={{safeBrand this}}>
+          <input type="checkbox" name="brand" value={{safeBrand this}} id={{safeBrand this}} />
+            {{this}}
+          </label>
           {{/each}}
       </div>
-      <h2>Size</h2>
+      <h3>Size</h3>
       <div class="size-option">
 
           {{#each sizes}}
-          <div>
-          <input type="radio" name="size" value={{this}} id={{this}} /><label for={{this}}l>{{this}}</label>
-          </div>
+          <label for={{this}}>
+            <input type="checkbox" name="size" value={{@key}} id={{this}} />
+            {{this}}
+          </label>
             {{/each}}
 
       </div>
-      <h2>Color</h2>
+      <h3>Color</h3>
       <div class="color-option">
 
           {{#each colors}}
-          <div>
-          <input type="radio" name="color" value={{this}} id={{this}} /><label for={{this}}l>{{this}}</label>
-          </div>
+          <label for={{this}}>
+            <input type="checkbox" name="color" value={{this}} id={{this}} />
+
+            {{this}}
+          </label>
             {{/each}}
 
       </div>
+      <button class="filter">Filter</button>
+      <button class="clear-filter">Clear filters</button>
     </script>
     <script type="text/x-template" id="stockTemplate">
       {{#each shoe}}
@@ -81,22 +74,34 @@
         <svg class={{colorname}} viewBox={{{viewBox brand}}}>
           <use href={{icon brand}}></use>
         </svg>
-        <h2 class="brand">{{brand}}</h2>
+        <h2 class="brand">{{displayBrand brand}}</h2>
         <h3 class="colorname">{{displayColor colorname}}</h3>
         <h3 class="price">R{{price}}</h3>
         <div class="more">
           <div class="sizes">
-            <button class={{stockCheck stock.four}}>4</button>
-            <button class={{stockCheck stock.five}}>5</button>
-            <button class={{stockCheck stock.six}}>6</button>
-            <button class={{stockCheck stock.seven}}>7</button>
-            <button class={{stockCheck stock.eight}}>8</button>
+            <button name={{colorname}} value="four" class={{stockCheck stock.four}}>4</button>
+            <button name={{colorname}} value="five" class={{stockCheck stock.five}}>5</button>
+            <button name={{colorname}} value="six" class={{stockCheck stock.six}}>6</button>
+            <button name={{colorname}} value="seven" class={{stockCheck stock.seven}}>7</button>
+            <button name={{colorname}} value="eight" class={{stockCheck stock.eight}}>8</button>
           </div>
-          <span></span>
-          <button class="add-shoe">Add to cart</button>
+          <div id={{stockLevel colorname}} class="stock-level"> </div>
+          <button class="add-shoe" id={{addThisShoe colorname}}>Add to cart</button>
         </div>
       </div>
       {{/each}}
+    </script>
+    <script type="text/x-template" id="cartTemplate">
+      {{#each shoe}}
+      <div class="in-cart">
+        <div class="cart-brand">{{displayBrand brand}}</div>
+        <div class="cart-color">{{displayColor colorname}}</div>
+        <div class="cart-size">Size {{wordToDigit size}} </div>
+        <div class="cart-qty">Qty: {{qty}}</div>
+        <div class="cart-price">R{{costForQty price qty}}</div>
+      </div>
+      {{/each}}
+      <h3 class="total-cost">Total: R{{total}}</h3>
     </script>
   </body>
 </html>
