@@ -1,141 +1,213 @@
 const shoeData = {
-  shoe: [
-    {
-      brand: "Crocs",
-      colorname: "blue-crocs",
-      color: "#0061A0",
-      price: 350,
-      stock: {
-        four: 3,
-        six: 10,
-      },
+  //Product ID -> brand-color
+  'crocs-blue': {
+    brand: 'Crocs',
+    color: {
+      name: 'blue',
+      value: '#0061A0',
     },
-    {
-      brand: "Crocs",
-      colorname: "red-crocs",
-      color: "#bf1131",
-      price: 350,
-      stock: {
-        five: 8,
-        seven: 5,
-      },
+    price: 350,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
     },
-    {
-      brand: "Converse",
-      colorname: "green-converse",
-      color: "#067335",
-      price: 425,
-      stock: {
-        four: 2,
-        five: 6,
-      },
+  },
+  'crocs-red': {
+    brand: 'Crocs',
+    color: {
+      name: 'red',
+      value: '#bf1131',
     },
-    {
-      brand: "Converse",
-      colorname: "pink-converse",
-      color: "#df677d",
-      price: 425,
-      stock: {
-        five: 6,
-        six: 12,
-        eight: 2,
-      },
+    price: 350,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
     },
-    {
-      brand: "Vans",
-      colorname: "black-vans",
-      color: "#171717",
-      price: 375,
-      stock: {
-        five: 2,
-        six: 12,
-        seven: 6,
-      },
+  },
+  'converse-green': {
+    brand: 'Converse',
+    color: {
+      name: 'green',
+      value: '#067335',
     },
-    {
-      brand: "Vans",
-      colorname: "pink-vans",
-      color: "#df677d",
-      price: 375,
-      stock: {
-        five: 6,
-      },
+    price: 425,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
     },
-    {
-      brand: "Vans",
-      colorname: "orange-vans",
-      color: "#f28241",
-      price: 375,
-      stock: {
-        four: 8,
-      },
+  },
+  'converse-pink': {
+    brand: 'Converse',
+    color: {
+      name: 'pink',
+      value: '#df677d',
     },
-    {
-      brand: "Vans",
-      colorname: "red-vans",
-      color: "#bf1131",
-      price: 375,
-      stock: {
-        six: 4,
-      },
+    price: 425,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
     },
-    {
-      brand: "Vans",
-      colorname: "blue-vans",
-      color: "#0061A0",
-      price: 375,
-      stock: {
-        seven: 7,
-      },
+  },
+  'vans-black': {
+    brand: 'Vans',
+    color: {
+      name: 'black',
+      value: '#171717',
     },
-    {
-      brand: "Dr-Martens",
-      colorname: "green-drmartens",
-      color: "#067335",
-      price: 600,
-      stock: {
-        eight: 3,
-        nine: 1,
-      },
+    price: 375,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
     },
-    {
-      brand: "Dr-Martens",
-      colorname: "pink-drmartens",
-      color: "#df677d",
-      price: 600,
-      stock: {
-        six: 4,
-      },
+  },
+  'vans-pink': {
+    brand: 'Vans',
+    color: {
+      name: 'pink',
+      value: '#df677d',
     },
-    {
-      brand: "Dr-Martens",
-      colorname: "orange-drmartens",
-      color: "#f28241",
-      price: 600,
-      stock: {
-        five: 6,
-      },
+    price: 375,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
     },
-    {
-      brand: "Dr-Martens",
-      colorname: "blue-drmartens",
-      color: "#0061A0",
-      price: 600,
-      stock: {
-        six: 3,
-      },
+  },
+  'vans-orange': {
+    brand: 'Vans',
+    color: {
+      name: 'orange',
+      value: '#f28241',
     },
-    {
-      brand: "Nike",
-      colorname: "blue-nike",
-      color: "#0061A0",
-      price: 600,
-      stock: {
-        six: 3,
-      },
+    price: 375,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
     },
-  ],
-  brands: ["Crocs", "Converse", "Vans", "Dr Martens", "Nike"],
-  colors: ["blue", "red", "green", "pink", "black", "orange"],
-  sizes: { four: 4, five: 5, six: 6, seven: 7, eight: 8 },
+  },
+  'vans-red': {
+    brand: 'Vans',
+    color: {
+      name: 'red',
+      value: '#bf1131',
+    },
+    price: 375,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
+    },
+  },
+  'vans-blue': {
+    brand: 'Vans',
+    color: {
+      name: 'blue',
+      value: '#0061A0',
+    },
+    price: 375,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
+    },
+  },
+  'drmartens-green': {
+    brand: 'Dr Martens',
+    color: {
+      name: 'green',
+      value: '#067335',
+    },
+    price: 600,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
+    },
+  },
+  'drmartens-pink': {
+    brand: 'Dr Martens',
+    color: {
+      name: 'pink',
+      value: '#df677d',
+    },
+    price: 600,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
+    },
+  },
+  'drmartens-orange': {
+    brand: 'Dr Martens',
+    color: {
+      name: 'orange',
+      value: '#f28241',
+    },
+    price: 600,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
+    },
+  },
+  'drmartens-blue': {
+    brand: 'Dr Martens',
+    color: {
+      name: 'blue',
+      value: '#0061A0',
+    },
+    price: 600,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
+    },
+  },
+  'nike-blue': {
+    brand: 'Nike',
+    color: {
+      name: 'blue',
+      value: '#0061A0',
+    },
+    price: 600,
+    stock: {
+      four: 1,
+      five: 3,
+      six: 5,
+      seven: 3,
+      eight: 1,
+    },
+  },
 };

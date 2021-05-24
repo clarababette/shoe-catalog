@@ -1,92 +1,139 @@
 function shoeFilter() {
-  let stock = [];
-  let brands = [];
-  let sizes = [];
-  let colors = [];
+  let stock = {};
+  let allBrands = {};
+  let allSizes = {};
+  let allColors = [];
+  let searchBrands = [];
+  let searchSizes = [];
+  let searchColors = [];
 
   function setStock(thisStock) {
     stock = thisStock;
   }
 
-  function setValues(theseBrands, theseSizes, theseColors) {
-    brands = theseBrands;
-    sizes = theseSizes;
-
-    colors = theseColors;
-  }
-
-  function brandMatches(searchList) {
-    if (brands.length == 0) {
-      return searchList;
-    } else {
-      let matches = [];
-      brands.forEach((brand) => {
-        searchList.forEach((shoe) => {
-          if (shoe.brand == brand) {
-            matches.push(shoe);
-          }
-        });
-      });
-      return matches;
-    }
-  }
-
-  function sizeMatches(searchList) {
-    if (sizes.length == 0) {
-      return searchList;
-    } else {
-      let matches = [];
-      sizes.forEach((size) => {
-        searchList.forEach((shoe) => {
+  function setOptions(allShoes) {
+    for (id in allShoes) {
+      let shoe = allShoes[id];
+      let sizes = Object.getOwnPropertyNames(shoe['stock']);
+      let soldOut = function () {
+        let x = true;
+        sizes.forEach((size) => {
           if (shoe.stock[size] > 0) {
-            matches.push(shoe);
+            x = false;
           }
         });
+        return x;
+      };
+      let x = id.split('-');
+      if (!allBrands[x[0]] && !soldOut()) {
+        //let value = x[0];
+
+        allBrands[x[0]] = shoe.brand;
+      }
+      if (!allColors.includes(shoe['color']['name']) && !soldOut()) {
+        allColors.push(shoe['color']['name']);
+      }
+
+      sizes.forEach((size) => {
+        if (shoe['stock'][size] > 0 && !allSizes[size]) {
+          switch (size) {
+            case 'three':
+              allSizes[size] = 3;
+              break;
+            case 'four':
+              allSizes[size] = 4;
+              break;
+            case 'five':
+              allSizes[size] = 5;
+              break;
+            case 'six':
+              allSizes[size] = 6;
+              break;
+            case 'seven':
+              allSizes[size] = 7;
+              break;
+            case 'eight':
+              allSizes[size] = 8;
+              break;
+            default:
+              break;
+          }
+        }
       });
-      return matches;
     }
   }
 
-  function colorMatches(searchList) {
-    if (colors.length == 0) {
-      return searchList;
-    } else {
-      let matches = [];
-      colors.forEach((color) => {
-        searchList.forEach((shoe) => {
-          if (shoe.colorname.startsWith(color)) {
-            matches.push(shoe);
-          }
-        });
-      });
-      return matches;
-    }
+  function getAllBrands() {
+    return allBrands;
+  }
+
+  function getAllColors() {
+    return allColors;
+  }
+
+  function getAllSizes() {
+    return allSizes;
+  }
+
+  function setCriteria(theseBrands, theseSizes, theseColors) {
+    searchBrands = theseBrands;
+    searchSizes = theseSizes;
+    searchColors = theseColors;
   }
 
   function getResults() {
-    let matchList = stock;
-    matchList = brandMatches(matchList);
-    matchList = sizeMatches(matchList);
-    matchList = colorMatches(matchList);
-    return matchList;
+    let matches = Object.keys(stock);
+    if (searchBrands.length > 0) {
+      matches = matches.filter((product) => {
+        return searchBrands.includes(stock[product]['brand']);
+      });
+    }
+    if (searchColors.length > 0) {
+      matches = matches.filter((product) => {
+        return searchColors.includes(stock[product]['color']['name']);
+      });
+    }
+    if (searchSizes.length > 0) {
+      matches = matches.filter((product) => {
+        let match = false;
+        searchSizes.forEach((size) => {
+          if (stock[product]['stock'][size] > 0) {
+            match = true;
+          }
+        });
+        return match;
+      });
+    }
+    return matches;
   }
 
   return {
+    setOptions,
+    getAllBrands,
+    getAllSizes,
+    getAllColors,
     setStock,
-    setValues,
+    setCriteria,
     getResults,
-    brandMatches,
   };
 }
 
 function shoeShop() {
-  let color = "";
-  let size = "";
-  let stock = [];
+  let color = '';
+  let size = '';
+  let stock = {};
   let cart = {
     shoe: [],
   };
   let currentShoe = {};
+
+  function stockCheck(productID, size) {
+    if (stock.hasOwnProperty(productID) && stock[productID]['stock'][size] > 0) {
+      return 'in-stock';
+    } else {
+      return 'out-of-stock';
+    }
+  }
 
   function setStock(currentStock) {
     stock = currentStock;
@@ -104,15 +151,8 @@ function shoeShop() {
     cart = currentCart;
   }
 
-  function stockLevel() {
-    let stockNum = 0;
-    stock.forEach((shoe) => {
-      if (shoe.colorname == color) {
-        stockNum = shoe["stock"][size];
-        currentShoe = shoe;
-      }
-    });
-    return stockNum;
+  function stockLevel(product, size) {
+    return stock[product]['stock'][size];
   }
 
   function getCurrentShoe() {
@@ -122,7 +162,7 @@ function shoeShop() {
   function addToCart() {
     let newShoe = true;
     if (stockLevel() > 0) {
-      cart["shoe"].forEach((shoe) => {
+      cart['shoe'].forEach((shoe) => {
         if (currentShoe.colorname == shoe.colorname && size == shoe.size) {
           shoe.qty++;
           newShoe = false;
@@ -137,7 +177,7 @@ function shoeShop() {
         thisShoe.price = currentShoe.price;
         thisShoe.qty = 1;
         thisShoe.size = size;
-        cart["shoe"].push(thisShoe);
+        cart['shoe'].push(thisShoe);
         updateStock();
       }
     }
@@ -146,7 +186,7 @@ function shoeShop() {
 
   function getTotalCost() {
     let totalCost = 0;
-    cart["shoe"].forEach((shoe) => {
+    cart['shoe'].forEach((shoe) => {
       totalCost += shoe.price * shoe.qty;
     });
     cart.total = totalCost;
@@ -156,7 +196,7 @@ function shoeShop() {
   function updateStock() {
     stock.forEach((shoe) => {
       if (shoe.colorname == color) {
-        shoe["stock"][size]--;
+        shoe['stock'][size]--;
       }
     });
   }
@@ -170,16 +210,29 @@ function shoeShop() {
   }
 
   function returnToStock() {
-    while (cart["shoe"].length > 0) {
-      cartShoe = cart["shoe"][0];
+    while (cart['shoe'].length > 0) {
+      cartShoe = cart['shoe'][0];
       stock.forEach((shoe) => {
         if (shoe.colorname == cartShoe.colorname) {
-          shoe["stock"][cartShoe.size] += cartShoe.qty;
+          shoe['stock'][cartShoe.size] += cartShoe.qty;
           cart.shoe.shift();
         }
       });
     }
     cart.total = 0;
+  }
+
+  function getQty() {
+    let qty = '';
+    console.log(color, size);
+    cart['shoe'].forEach((shoe) => {
+      if (currentShoe.colorname == shoe.colorname && size == shoe.size) {
+        console.log(shoe.qty);
+        console.log(shoe['qty'].toString());
+        qty = shoe['qty'].toString();
+      }
+    });
+    return qty;
   }
 
   return {
@@ -195,5 +248,7 @@ function shoeShop() {
     updateStock,
     getCart,
     returnToStock,
+    getQty,
+    stockCheck,
   };
 }

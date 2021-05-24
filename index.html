@@ -36,8 +36,8 @@
       <h3>Brand</h3>
       <div class="brand-option">
         {{#each brands}}
-        <label for={{safeBrand this}}>
-          <input type="checkbox" name="brand" value={{safeBrand this}} id={{safeBrand this}} />
+        <label for={{this}}>
+          <input type="checkbox" name="brand" value={{@key}} id={{@key}} />
             {{this}}
           </label>
           {{/each}}
@@ -47,7 +47,7 @@
 
           {{#each sizes}}
           <label for={{this}}>
-            <input type="checkbox" name="size" value={{@key}} id={{this}} />
+            <input type="checkbox" name="size" value={{@key}} id={{@key}} />
             {{this}}
           </label>
             {{/each}}
@@ -69,24 +69,24 @@
       <button class="clear-filter">Clear filters</button>
     </script>
     <script type="text/x-template" id="stockTemplate">
-      {{#each shoe}}
-      <div class="shoe-card" >
-        <svg class={{colorname}} viewBox={{{viewBox brand}}}>
+      {{#each shoes}}
+      <div class="shoe-card" id={{productID}} >
+        <svg class={{productID}} viewBox={{{viewBox brand}}}>
           <use href={{icon brand}}></use>
         </svg>
-        <h2 class="brand">{{displayBrand brand}}</h2>
-        <h3 class="colorname">{{displayColor colorname}}</h3>
+        <h2 class="brand">{{brand}}</h2>
+        <h3 class="colorname">{{color.name}}</h3>
         <h3 class="price">R{{price}}</h3>
         <div class="more">
           <div class="sizes">
-            <button name={{colorname}} value="four" class={{stockCheck stock.four}}>4</button>
-            <button name={{colorname}} value="five" class={{stockCheck stock.five}}>5</button>
-            <button name={{colorname}} value="six" class={{stockCheck stock.six}}>6</button>
-            <button name={{colorname}} value="seven" class={{stockCheck stock.seven}}>7</button>
-            <button name={{colorname}} value="eight" class={{stockCheck stock.eight}}>8</button>
+            <button name={{productID}} value="four" class={{stockCheck productID "four"}}>4</button>
+            <button name={{productID}} value="five" class={{stockCheck productID "five"}}>5</button>
+            <button name={{productID}} value="six" class={{stockCheck productID "six"}}>6</button>
+            <button name={{productID}} value="seven" class={{stockCheck productID "seven"}}>7</button>
+            <button name={{productID}} value="eight" class={{stockCheck productID "eight"}}>8</button>
           </div>
-          <div id={{stockLevel colorname}} class="stock-level"> </div>
-          <button class="add-shoe" id={{addThisShoe colorname}}>Add to cart</button>
+          <div  class="stock-level"> </div>
+          <button class="add-shoe" >Add to cart</button>
         </div>
       </div>
       {{/each}}
