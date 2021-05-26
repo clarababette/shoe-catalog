@@ -119,13 +119,8 @@ function shoeFilter() {
 }
 
 function shoeShop() {
-  let color = '';
-  let size = '';
   let stock = {};
-  let cart = {
-    shoe: [],
-  };
-  let currentShoe = {};
+  let cart = {};
 
   function stockCheck(productID, size) {
     if (stock.hasOwnProperty(productID) && stock[productID]['stock'][size] > 0) {
@@ -159,37 +154,34 @@ function shoeShop() {
     return currentShoe;
   }
 
-  function addToCart() {
-    let newShoe = true;
-    if (stockLevel() > 0) {
-      cart['shoe'].forEach((shoe) => {
-        if (currentShoe.colorname == shoe.colorname && size == shoe.size) {
-          shoe.qty++;
-          newShoe = false;
-          updateStock();
-        }
-      });
-
-      if (newShoe) {
-        thisShoe = {};
-        thisShoe.brand = currentShoe.brand;
-        thisShoe.colorname = currentShoe.colorname;
-        thisShoe.price = currentShoe.price;
-        thisShoe.qty = 1;
-        thisShoe.size = size;
-        cart['shoe'].push(thisShoe);
-        updateStock();
+  function addToCart(productID, itemID) {
+    let product = stock[productID];
+    let size = itemID.split('-')[2];
+    if (product['stock'][size] != 0) {
+      if (cart[itemID]) {
+        incItemQty(itemID);
+      } else {
+        cart[itemID] = {};
+        cart[itemID]['brand'] = product['brand'];
+        cart[itemID]['color'] = product['color']['name'];
+        cart[itemID]['unitPrice'] = product['price'];
+        cart[itemID]['qty'] = 1;
       }
+      product['stock'][size]--;
     }
     return cart;
   }
 
+  function incItemQty(itemID) {
+    cart[itemID]['qty']++;
+  }
+
   function getTotalCost() {
     let totalCost = 0;
-    cart['shoe'].forEach((shoe) => {
-      totalCost += shoe.price * shoe.qty;
-    });
-    cart.total = totalCost;
+    for (item in cart) {
+      let subTotal = cart[item]['qty'] * cart[item]['unitPrice'];
+      totalCost += subTotal;
+    }
     return totalCost;
   }
 
@@ -207,6 +199,26 @@ function shoeShop() {
 
   function getCart() {
     return cart;
+  }
+
+  function returnItems(itemID, qty) {
+    product = stock[getProductFromItem(itemID)];
+    cart[itemID]['qty'] -= qty;
+    let size = itemID.split('-')[2];
+    product['stock'][size] += qty;
+    if (cart[itemID]['qty'] == 0) {
+      delete cart[itemID];
+    }
+    return cart;
+  }
+
+  function getProductFromItem(itemID) {
+    let productID = itemID.split('-')[0] + '-' + itemID.split('-')[1];
+    return productID;
+  }
+
+  function getSizeFromItem(itemID) {
+    return itemID.split('-')[2];
   }
 
   function returnToStock() {
@@ -250,5 +262,8 @@ function shoeShop() {
     returnToStock,
     getQty,
     stockCheck,
+    getProductFromItem,
+    returnItems,
+    getSizeFromItem,
   };
 }

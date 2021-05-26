@@ -127,7 +127,8 @@ label {
 
 .in-cart {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 0.5fr 0.5fr;
   justify-content: center;
   align-items: center;
   text-align: left;
@@ -148,26 +149,30 @@ label {
 }
 
 .cart-brand {
-  grid-column: 1 / span 1;
+  grid-column: 1 / span 2;
   grid-row: 1;
 }
 
 .cart-color {
   grid-column: 1 / span 1;
+  grid-row: 2;
   text-transform: capitalize;
 }
 
 .cart-size {
-  grid-column: 2 / span 1;
+  grid-column: 3 / span 1;
+  grid-row: 2;
   justify-self: end;
 }
 
 .cart-qty {
   grid-column: 1 / span 1;
+  grid-row: 3 / span 2;
 }
 
 .cart-price {
-  grid-column: 2 / span 1;
+  grid-column: 3 / span 1;
+  grid-row: 3 / span 2;
   justify-self: end;
 }
 
@@ -177,6 +182,10 @@ label {
   border-radius: 0.1em;
   color: var(--offwhite);
   margin: 0.25em;
+  grid-column: 2;
+  grid-row: 4;
+  font-size: 0.5em;
+  width: 2em;
 }
 .increase-qty {
   background-color: var(--blue);
@@ -184,6 +193,10 @@ label {
   border-radius: 0.1em;
   color: var(--offwhite);
   margin: 0.25em;
+  grid-column: 2;
+  grid-row: 3;
+  font-size: 0.5em;
+  width: 2em;
 }
 
 .checkout,
@@ -206,16 +219,12 @@ label {
   display: none;
 }
 
-.delete {
-  width: 1.1em;
-}
-
-.deletebtn {
+.delete-item {
   background: none;
   border: none;
   cursor: pointer;
   width: 1.2em;
-  grid-column: 2 / span 1;
+  grid-column: 3 / span 1;
   grid-row: 1;
   justify-self: end;
 }
