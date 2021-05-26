@@ -141,6 +141,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (addBtn) {
+      document.querySelector('.cart').classList.remove('checked-out-cart');
+      document.querySelector('.cart').classList.remove('cleared-cart');
       let productID = addBtn.parentElement.parentElement.id;
       let selectedSize = document.querySelector('#' + productID + ' .selected-size');
 
@@ -273,9 +275,11 @@ document.addEventListener('DOMContentLoaded', function () {
       if (qtyInStock == 0) {
         sizeBtn.classList.remove('in-stock');
         sizeBtn.classList.add('out-of-stock');
+        document.querySelector('#' + itemID + ' .increase-qty').classList.add('no-more');
       } else {
         sizeBtn.classList.add('in-stock');
         sizeBtn.classList.remove('out-of-stock');
+        document.querySelector('#' + itemID + ' .increase-qty').classList.remove('no-more');
       }
 
       if (sizeBtn.classList.contains('selected-size')) {
@@ -290,9 +294,8 @@ document.addEventListener('DOMContentLoaded', function () {
       localStorage.removeItem('customerCart');
       localStorage.setItem('shopData', JSON.stringify(myShop.getStock()));
       myShop.setCart({});
+      document.querySelector('.cart').classList.add('checked-out-cart');
       document.querySelector('.my-cart').innerHTML = '';
-      checkOutBtn.classList.add('empty-cart');
-      document.querySelector('.total-cost').innerHTML = "Thank you for shopping at Lubabalo's Shoe Emporium!";
     }
 
     if (clearCartBtn) {
@@ -300,17 +303,18 @@ document.addEventListener('DOMContentLoaded', function () {
       for (itemID in cart) {
         myShop.returnItems(itemID, cart[itemID]['qty']);
       }
-      console.log(myShop.getCart());
+
       document.querySelector('.my-cart').innerHTML = '';
-      document.querySelector('.total-cost').innerHTML = 'Cart successfully cleared!';
+      document.querySelector('.cart').classList.add('cleared-cart');
       localStorage.removeItem('customerCart');
       localStorage.setItem('shopData', JSON.stringify(myShop.getStock()));
     }
   });
 
-  // //FILTER - done
+  // //FILTER
   const filterBtn = document.querySelector('.filter');
   filterBtn.addEventListener('click', () => {
+    document.querySelector('.shoe-stock').classList.remove('no-matches');
     const selectedBrands = document.querySelectorAll('input[name="brand"]:checked');
     const selectedSizes = document.querySelectorAll('input[name="size"]:checked');
     const selectedColors = document.querySelectorAll('input[name="color"]:checked');
@@ -336,8 +340,9 @@ document.addEventListener('DOMContentLoaded', function () {
     filter.setStock(myStock);
     filter.setCriteria(brands, sizes, colors);
     let matches = filter.getResults();
-    console.log(matches);
-    //FIX!!!!
+    if (matches.length == 0) {
+      document.querySelector('.shoe-stock').classList.add('no-matches');
+    }
     let shoeCards = document.querySelectorAll('.shoe-card');
     shoeCards.forEach((card) => {
       if (!matches.includes(card.id)) {
@@ -351,6 +356,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // //FILTER RESET - done
   const clearFilterBtn = document.querySelector('.clear-filter');
   clearFilterBtn.addEventListener('click', () => {
+    document.querySelector('.shoe-stock').classList.remove('no-matches');
     const brands = document.querySelectorAll('input[name="brand"]');
     const sizes = document.querySelectorAll('input[name="size"]');
     const colors = document.querySelectorAll('input[name="color"]');

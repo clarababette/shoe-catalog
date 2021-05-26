@@ -105,6 +105,19 @@ label {
   display: none;
 }
 
+.no-matches.shoe-stock {
+  visibility: hidden;
+  position: relative;
+}
+.no-matches.shoe-stock::before {
+  content: "I'm sorry, we don't have any shoes that match your search.";
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  visibility: visible;
+}
+
 /* ==== CART ==== */
 .cart {
   color: #0e2f33;
@@ -197,6 +210,7 @@ label {
   grid-row: 3;
   font-size: 0.5em;
   width: 2em;
+  position: relative;
 }
 
 .checkout,
@@ -219,6 +233,39 @@ label {
   display: none;
 }
 
+.cart::before {
+  visibility: hidden;
+  content: '';
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #0e2f33;
+  display: block;
+  text-align: center;
+  background-color: var(--blue);
+  padding: 1em;
+  grid-column: 3 / span 1;
+  height: fit-content;
+  border-radius: 0.1em;
+  box-shadow: 0 0 0.1em #342419;
+}
+
+.checked-out-cart.cart {
+  visibility: hidden;
+}
+.checked-out-cart.cart::before {
+  content: "Thank you for shopping at Lubabalo's Shoe Emporium!";
+  visibility: visible;
+}
+.cleared-cart.cart {
+  visibility: hidden;
+}
+.cleared-cart.cart::before {
+  content: 'Cart successfully cleared!';
+  visibility: visible;
+}
+
 .delete-item {
   background: none;
   border: none;
@@ -227,11 +274,30 @@ label {
   grid-column: 3 / span 1;
   grid-row: 1;
   justify-self: end;
+  color: var(--offwhite);
 }
 
-.cart-clone {
-  display: none;
+.increase-qty::before {
+  content: 'No more stock available';
+  position: absolute;
+  top: -0.5em;
+  bottom: 0;
+  left: 0;
+  right: -5em;
+  visibility: hidden;
+  text-align: left;
+  line-height: 1;
+  color: red;
 }
+
+.no-more.increase-qty {
+  visibility: hidden;
+}
+
+.no-more.increase-qty::before {
+  visibility: visible;
+}
+
 /* ==== SHOE STOCK ==== */
 
 .shoe-stock {
