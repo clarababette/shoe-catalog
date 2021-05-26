@@ -1,3 +1,8 @@
+//CSS RULES FOR STOCK COLORS
+for (productID in myStock) {
+  rule = '.' + productID + ' { --mid: ' + myStock[productID]['color']['value'] + '}';
+  document.styleSheets[0].insertRule(rule);
+}
 document.addEventListener('DOMContentLoaded', function () {
   //GET SHOP DATA
   let myStock = {};
@@ -52,11 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  //CSS RULES FOR STOCK COLORS
-  for (productID in myStock) {
-    rule = '.' + productID + ' { --mid: ' + myStock[productID]['color']['value'] + '}';
-    document.styleSheets[0].insertRule(rule);
-  }
   //STOCK TEMPLATE
   let stockTemplateSource = document.querySelector('#stockTemplate').innerHTML;
   let stockTemplate = Handlebars.compile(stockTemplateSource);
