@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
       case 'Vans':
         return new Handlebars.SafeString('#vans');
       case 'Dr Martens':
-        return new Handlebars.SafeString('#dr-martens');
+        return new Handlebars.SafeString('#drmartens');
       case 'Nike':
         return new Handlebars.SafeString('#nike');
     }
