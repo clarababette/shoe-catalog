@@ -99,6 +99,7 @@ body {
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: black solid 1px;
+  position: relative;
 }
 
 .update-product svg {
@@ -181,6 +182,24 @@ body {
 
 .dont-display {
   display: none;
+}
+
+.sold-out svg {
+  filter: saturate(40%);
+}
+
+.sold-out::before {
+  content: "sold out";
+  position: absolute;
+  background-color: #ff2e2e;
+  color: white;
+  padding: 0.1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  bottom: 1.1rem;
+  left: 0;
+  z-index: 1;
+  font-size: 0.5rem;
 }
 
 /* ==== MOBILE LAYOUT ==== */

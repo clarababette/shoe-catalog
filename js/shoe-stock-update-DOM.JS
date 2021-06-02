@@ -58,6 +58,9 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector("." + productID).innerHTML = document.getElementById(
       productID.split("-")[0]
     ).innerHTML;
+    if (updateMyStock.soldOut(productID)) {
+      document.getElementById(productID).classList.add("sold-out");
+    }
   }
 
   let newShoeBtn = document.querySelector(".new-product");
@@ -123,6 +126,11 @@ document.addEventListener("DOMContentLoaded", function () {
         "shopData",
         JSON.stringify(updateMyStock.getStock())
       );
+      if (updateMyStock.soldOut(productID)) {
+        document.getElementById(productID).classList.add("sold-out");
+      } else {
+        document.getElementById(productID).classList.remove("sold-out");
+      }
     }
 
     if (removeBtn) {
