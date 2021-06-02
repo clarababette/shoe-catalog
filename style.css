@@ -39,6 +39,11 @@ button {
   margin-bottom: 150px;
   display: grid;
   grid-template-columns: 250px 1fr 250px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  /* margin-left: calc((100vw - 1400px) / 2);
+  margin-right: calc((100vw - 1400px) / 2); */
 }
 
 /* ==== SEARCH ==== */
@@ -365,6 +370,36 @@ label {
 
 .shoe-card:hover .more {
   display: block;
+}
+
+.sold-out svg {
+  filter: saturate(40%);
+}
+
+.sold-out.shoe-card::before {
+  content: 'sold out';
+  position: absolute;
+  background-color: #ff2e2e;
+  transform: rotate(-30deg);
+  color: white;
+  padding: 0.1em;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  bottom: 120px;
+  left: 30px;
+  z-index: 1;
+}
+
+.sold-out.shoe-card:hover {
+  margin-bottom: initial;
+  z-index: initial;
+  background: initial;
+  border: initial;
+  box-shadow: initial;
+}
+
+.sold-out.shoe-card:hover .more {
+  display: none;
 }
 
 .sizes {

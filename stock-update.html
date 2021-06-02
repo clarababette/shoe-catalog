@@ -4,107 +4,65 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Update</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style-stock-update.css" />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link href="https://fonts.googleapis.com/css2?family=Palanquin:wght@100;200;300;400&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Sofia&display=swap" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.11/handlebars.min.js"></script>
-    <title>Lubabalo's Shoe Emporium</title>
   </head>
   <body>
-    <img id="logo" src="logo.png" />
-    <div class="shop">
-      <div class="search"></div>
-      <div class="shoe-stock"></div>
-      <div class="cart">
-        <svg class="cart-icon" viewBox="0 0 512 512">
-          <use href="#cart"></use>
-        </svg>
-        <h2>Your cart</h2>
-        <div class="my-cart"></div>
-        <h3 class="total-cost"></h3>
-        <button class="checkout">Proceed to checkout</button>
-        <button class="clear-cart">Clear cart</button>
-      </div>
+    <img class="stock-logo" src="logo.png" />
+    <button class="new-product">Add new product</button>
+    <button onclick="document.location='index.html'" class="return-to-shop">Return to shop</button>
+    <div class="confirm dont-display">
+      <div>You are about to remove a product from your stock.</div>
+      <div>This action cannot be undone.</div>
+      <button class="proceed">Proceed</button>
+      <button class="cancel">Cancel</button>
     </div>
-
+    <div class="new-shoe">
+      <label for="brands">Select a brand:</label>
+      <select name="brands">
+        <option value="crocs">Crocs</option>
+        <option value="nike">Nike</option>
+        <option value="drmartens">Dr Martens</option>
+        <option value="vans">Vans</option>
+        <option value="converse">Converse</option>
+      </select>
+      <label for="color-value">Select a color:</label>
+      <input name="color-value" type="color" />
+      <label for="color-name">Give the color a name:</label>
+      <input name="color-name" type="text" />
+      <button class="preview">Preview</button>
+      <div>
+        <svg class="preview-icon"></svg>
+      </div>
+      <label for="four">Size 4: </label><input type="number" name="four" step="1" min="0" /> <label for="five">Size 5: </label><input type="number" name="five" step="1" min="0" /> <label for="six">Size 6: </label><input type="number" name="six" step="1" min="0" /> <label for="seven">Size 7: </label><input type="number" name="seven" step="1" min="0" /> <label for="eight">Size 8: </label><input type="number" name="eight" step="1" min="0" />
+    </div>
+    <div class="products dont-display"></div>
     <script src="js/shoe-data.js" charset="utf-8"></script>
     <script src="js/shoe-catalogue.js" charset="utf-8"></script>
-    <script src="js/shoe-shop-DOM.js" charset="utf-8"></script>
-
-    <script type="text/x-template" id="stockTemplate">
+    <script src="js/shoe-stock-update-DOM.js" charset="utf-8"></script>
+    <script type="text/x-template" id="updateTemplate">
       {{#each shoes}}
-      <div class="shoe-card" id={{productID}} >
-        <svg class={{productID}} viewBox={{{viewBox brand}}}>
-
-        </svg>
-        <h2 class="brand">{{brand}}</h2>
-        <h3 class="colorname">{{color.name}}</h3>
-        <h3 class="price">R{{price}}</h3>
-        <div class="more">
-          <div class="sizes">
-            <button name={{productID}} value="four" class={{stockCheck productID "four"}}>4</button>
-            <button name={{productID}} value="five" class={{stockCheck productID "five"}}>5</button>
-            <button name={{productID}} value="six" class={{stockCheck productID "six"}}>6</button>
-            <button name={{productID}} value="seven" class={{stockCheck productID "seven"}}>7</button>
-            <button name={{productID}} value="eight" class={{stockCheck productID "eight"}}>8</button>
-          </div>
-          <div  class="stock-level"> </div>
-          <button class="add-shoe" >Add to cart</button>
+      <div id={{productID}} class="update-product">
+          <svg class={{productID}} viewBox={{{viewBox brand}}}>
+          </svg>
+          <h4 class="brand">{{brand}}</h4>
+          <h5 class="color">{{color.name}}</h5>
+          <div class="price"><label for="price">R </label><input type="hidden" name="price" step="1" min="0" /><div>{{price}}</div></div>
+          <div class="size"><label for="four">Size 4: </label><input type="hidden" name="four" step="1" min="0" /><div>{{stock.four}}</div></div>
+          <div class="size"><label for="five">Size 5: </label><input type="hidden" name="five" step="1" min="0" /><div>{{stock.five}}</div></div>
+          <div class="size"><label for="six">Size 6: </label><input type="hidden" name="six" step="1" min="0" /><div>{{stock.six}}</div></div>
+          <div class="size"><label for="seven">Size 7: </label><input type="hidden" name="seven" step="1" min="0" /><div>{{stock.seven}}</div></div>
+          <div class="size"><label for="eight">Size 8: </label><input type="hidden" name="eight" step="1" min="0" /><div>{{stock.eight}}</div></div>
+          <button class="update-btn">Update</button>
+          <button class="save-btn dont-display">Save</button>
+          <button class="remove-btn">Remove</button>
         </div>
-      </div>
       {{/each}}
-    </script>
-    <script type="text/x-template" id="cartTemplate">
-      {{#each items}}
-      <div id={{itemID}} class="in-cart">
-        <div class="cart-brand">{{brand}}</div>
-        <div class="cart-color">{{color}}</div>
-        <div class="cart-size">Size: {{size}} </div>
-        <div class="cart-qty">Qty: {{qty}}</div>
-        <div class="cart-price">R{{subTotal}}</div>
-        <button class='increase-qty'>+</button>
-        <button class='decrease-qty'>—</button>
-        <button class='delete-item'>x</button>
-      </div>
-      {{/each}}
-    </script>
-    <script type="text/x-template" id="searchTemplate">
-      <h2>Refine by:</h2>
-      <h3>Brand</h3>
-      <div class="brand-option">
-        {{#each brands}}
-        <label for={{this}}>
-          <input type="checkbox" name="brand" value={{@key}} id={{@key}} />
-            {{this}}
-          </label>
-          {{/each}}
-      </div>
-      <h3>Size</h3>
-      <div class="size-option">
-
-          {{#each sizes}}
-          <label for={{this}}>
-            <input type="checkbox" name="size" value={{@key}} id={{@key}} />
-            {{this}}
-          </label>
-            {{/each}}
-
-      </div>
-      <h3>Color</h3>
-      <div class="color-option">
-
-          {{#each colors}}
-          <label for={{this}}>
-            <input type="checkbox" name="color" value={{this}} id={{this}} />
-
-            {{this}}
-          </label>
-            {{/each}}
-
-      </div>
-      <button class="filter">Filter</button>
-      <button class="clear-filter">Clear filters</button>
     </script>
   </body>
 </html>
@@ -206,20 +164,5 @@
         d="M512 473.8H260.19l-96.93-29.2H11.82a4.69 4.69 0 00-4.69 4.7v8.9a46.05 46.05 0 0046.02 46.09h99.05a9 9 0 009-8.96l.09-11.12a5.94 5.94 0 017.64-5.66l90.95 26.68h220.73A31.41 31.41 0 00512 473.8zM230.5 115.8l9.4 7.37-8.94 6.15a8.16 8.16 0 009.23 13.44l18.07-12.45.2-.16.4-.3.08-.08a8.16 8.16 0 00-.28-12.6l-18.12-14.2a8.16 8.16 0 00-10.03 12.84zM230.5 169.17l9.4 7.36-8.94 6.16a8.16 8.16 0 009.23 13.43l18.07-12.45.2-.15a8.13 8.13 0 00.2-12.98l-18.12-14.2a8.16 8.16 0 00-10.03 12.84zM242.91 244.09l15.96-15.07.08-.08.3-.31.17-.2a8.16 8.16 0 00-2.16-12.44L237.2 204.7a8.16 8.16 0 00-7.96 14.22l10.4 5.84-7.89 7.45a8.16 8.16 0 0011.17 11.86zM260.62 291.27l12.48-17.86.1-.14c.23-.33.41-.65.57-.95 0-.02.02-.04.03-.05.16-.33.3-.64.38-.94l.11-.28a8.15 8.15 0 00-5.3-10.23l-21.95-6.95a8.14 8.14 0 10-4.91 15.55l11.37 3.6-6.22 8.9a8.16 8.16 0 006.66 12.82c2.57 0 5.1-1.2 6.68-3.47zM296.23 311.18a8.15 8.15 0 00-8-10.44l-23 .5a8.15 8.15 0 00.36 16.3l11.92-.26-3.02 10.43a8.15 8.15 0 0015.64 4.54l6.1-21.07zM328.71 339.6a8.14 8.14 0 00-9.68-6.24l-22.49 4.9A8.15 8.15 0 00300 354.2l11.66-2.54-.98 10.82a8.15 8.15 0 1016.22 1.47l1.97-21.86c.07-.81.03-1.65-.15-2.48z"
       />
     </g>
-  </symbol>
-  <symbol id="cart">
-    <defs />
-    <circle cx="430.73" cy="479.49" r="24.38" fill="#5d5360" />
-    <path d="M422.6 422.6v56.9a8.12 8.12 0 1016.26 0v-56.9H422.6z" fill="#aea8af" />
-    <circle cx="154.41" cy="479.49" r="24.38" fill="#5d5360" />
-    <path d="M146.29 422.6v56.9a8.12 8.12 0 1016.25 0v-56.9h-16.25z" fill="#aea8af" />
-    <g fill="#c0bcc1">
-      <path
-        d="M455.11 414.48H138.25c-2.77 0-5.23-1.32-6.76-3.63s-1.8-5.1-.72-7.65l33.99-80.72c-5.11-1.82-10.26-3.54-15.34-5.48l-33.63 79.9a24.32 24.32 0 002.16 22.94 24.31 24.31 0 0020.3 10.9h316.86a8.12 8.12 0 100-16.26zM495.45 178.8l.6-16.26-59.9-2.18 3.99-49.49-16.2-1.3-4.05 50.2-64.13-2.34 1.42-53.6-16.25-.43-1.42 53.44-66.08-2.4-3.83-62.24-16.23 1 3.74 60.64-70.07-2.55-12.58-67.5-15.98 2.99 11.9 63.9-72.55-2.64-.59 16.25 76.2 2.77 12.51 67.2-64.23 1.43.37 16.24 66.88-1.48 13.17 70.67 15.98-2.98-12.68-68.06 57.53-1.27 4.04 65.6 16.22-1-4-64.97 57.87-1.28-1.59 59.67 16.25.44 1.62-60.47 59.62-1.33-4.46 55.44 16.2 1.3 4.6-57.1 56.75-1.26-.36-16.25-55.08 1.23 4.2-52.24 60.6 2.2zm-293.02 55.1l-12.34-66.23 68.03 2.48 3.85 62.42-59.55 1.33zm75.8-1.69l-3.8-61.47 64.64 2.36-1.54 57.8-59.3 1.31zm136.07-3.02l-60.5 1.34 1.52-56.84 63.27 2.3-4.28 53.2z"
-      />
-    </g>
-    <path d="M169.8 331.4a40.37 40.37 0 01-38.82-28.9L62.31 75.98a8.12 8.12 0 018.52-10.45l433.8 40.17a8.14 8.14 0 017.3 9.14l-21.8 167.21a32.63 32.63 0 01-29.87 28.22l-287.41 21.03c-1.02.07-2.05.1-3.06.1zM81.36 82.82l65.17 214.98a24.3 24.3 0 0025.12 17.27l287.41-21.02a16.32 16.32 0 0014.94-14.12l20.71-158.84L81.37 82.82z" fill="#c9c6ca" />
-    <path d="M49.46 80.57l-44.7-44.7a16.25 16.25 0 1122.99-22.99l44.7 44.7a16.26 16.26 0 01-22.99 22.99z" fill="#e6646e" />
-    <path d="M27.75 12.89c-.42-.42-.89-.73-1.34-1.1-.44.37-.92.68-1.33 1.1a16.26 16.26 0 000 22.98l44.7 44.7c.41.42.88.73 1.33 1.1.45-.37.92-.68 1.34-1.1a16.26 16.26 0 000-22.98l-44.7-44.7z" fill="#ff8087" />
   </symbol>
 </svg>

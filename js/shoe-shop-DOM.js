@@ -69,10 +69,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   let shoeCards = {};
   shoeCards.shoes = shoes;
-  console.log(shoeCards);
   shoeStock.innerHTML = stockTemplate(shoeCards);
   for (productID in myStock) {
+    //INSERT SVG CODE
     document.querySelector('.' + productID).innerHTML = document.getElementById(productID.split('-')[0]).innerHTML;
+    if (myShop.soldOut(productID)) {
+      document.getElementById(productID).classList.add('sold-out');
+    }
   }
 
   //document.querySelector('.crocs-blue').innerHTML = document.getElementById('crocs').innerHTML;
@@ -171,6 +174,13 @@ document.addEventListener('DOMContentLoaded', function () {
         stockIndicator(productID, selectedSize);
         localStorage.setItem('shopData', JSON.stringify(myShop.getStock()));
         localStorage.setItem('customerCart', JSON.stringify(myShop.getCart()));
+      }
+      for (productID in myStock) {
+        if (myShop.soldOut(productID)) {
+          document.getElementById(productID).classList.add('sold-out');
+        } else {
+          document.getElementById(productID).classList.remove('sold-out');
+        }
       }
     }
   });
@@ -279,7 +289,9 @@ document.addEventListener('DOMContentLoaded', function () {
       } else {
         sizeBtn.classList.add('in-stock');
         sizeBtn.classList.remove('out-of-stock');
-        document.querySelector('#' + itemID + ' .increase-qty').classList.remove('no-more');
+        if (document.querySelector('#' + itemID + ' .increase-qty')) {
+          document.querySelector('#' + itemID + ' .increase-qty').classList.remove('no-more');
+        }
       }
 
       if (sizeBtn.classList.contains('selected-size')) {
@@ -288,6 +300,11 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       localStorage.setItem('shopData', JSON.stringify(myShop.getStock()));
       localStorage.setItem('customerCart', JSON.stringify(myShop.getCart()));
+      if (myShop.soldOut(productID)) {
+        document.getElementById(productID).classList.add('sold-out');
+      } else {
+        document.getElementById(productID).classList.remove('sold-out');
+      }
     }
     //CHECK-OUT CART
     if (checkOutBtn) {
@@ -308,6 +325,13 @@ document.addEventListener('DOMContentLoaded', function () {
       document.querySelector('.cart').classList.add('cleared-cart');
       localStorage.removeItem('customerCart');
       localStorage.setItem('shopData', JSON.stringify(myShop.getStock()));
+      for (productID in myStock) {
+        if (myShop.soldOut(productID)) {
+          document.getElementById(productID).classList.add('sold-out');
+        } else {
+          document.getElementById(productID).classList.remove('sold-out');
+        }
+      }
     }
   });
 
