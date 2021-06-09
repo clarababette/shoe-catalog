@@ -317,6 +317,29 @@ function stockUpdate() {
     return productSoldOut;
   }
 
+  function addNewProductID(brandID, colorName) {
+    let productID = brandID + "-" + colorName.toLowerCase();
+    stock[productID] = {
+      color: {},
+      stock: {},
+    };
+    return productID;
+  }
+
+  function setBrand(productID, brand) {
+    if (brand == "drmartens") {
+      brand = "Dr Martens";
+    } else {
+      brand = brand.replace(brand[0], brand[0].toUpperCase());
+    }
+    stock[productID]["brand"] = brand;
+  }
+
+  function setColor(productID, colorName, colorValue) {
+    stock[productID]["color"]["name"] = colorName;
+    stock[productID]["color"]["value"] = colorValue;
+  }
+
   return {
     soldOut,
     setStock,
@@ -326,5 +349,8 @@ function stockUpdate() {
     getPrice,
     setPrice,
     removeProduct,
+    addNewProductID,
+    setBrand,
+    setColor,
   };
 }

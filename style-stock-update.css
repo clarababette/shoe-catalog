@@ -15,7 +15,7 @@ body {
 
 * {
   font-size: 0.9rem;
-  text-transform: uppercase;
+
   font-family: Arial, Helvetica, sans-serif;
   font-weight: normal;
 }
@@ -76,6 +76,157 @@ body {
   margin-right: 5rem;
 }
 
+.new-shoe {
+  width: 100%;
+  background-color: var(--offwhite);
+  padding: 1rem;
+  border-radius: 0.8em;
+  box-shadow: 0 0 0.8em -0.4em #342419;
+  grid-column: span 2;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: repeat(4, auto);
+  text-transform: none;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1000px;
+  min-width: 800px;
+  position: relative;
+}
+
+.new-shoe::before {
+  position: absolute;
+  content: 'Please enter all reqired fields.';
+  top: 25px;
+  left: 350px;
+  color: crimson;
+  background-color: lightpink;
+  padding: 0.4rem;
+  visibility: hidden;
+}
+
+.brand-selection {
+  grid-column: 1 / 2;
+}
+
+.color-name-set {
+  grid-column: 2 / 3;
+  position: relative;
+}
+
+.color-value-set {
+  grid-row: 2 / 3;
+}
+
+.new-shoe input {
+  margin: 0.5rem;
+}
+.new-shoe select {
+  margin: 0.5rem;
+}
+
+input[name='color-name'] {
+  width: 7rem;
+}
+
+.required {
+  position: relative;
+}
+
+.required::before {
+  position: absolute;
+  content: '*';
+  color: #ff2e2e;
+  top: 5px;
+  left: 1px;
+  right: 0;
+  bottom: 0;
+}
+
+input[type='number'] {
+  width: 5rem;
+}
+.new-shoe label {
+  display: inline;
+  padding: 0.5rem;
+}
+
+.preview-icon {
+  grid-column: 4 / 5;
+  grid-row: 1 / 5;
+  height: 12rem;
+  background-color: var(--lightblue);
+  padding: 1rem;
+  border-radius: 0.8em;
+  box-shadow: 0 0 0.8em -0.4em #342419;
+  margin: 1rem;
+  visibility: hidden;
+}
+
+.preview {
+  border: none;
+  color: black;
+  background-color: var(--pink);
+  border-radius: 0.1em;
+  box-shadow: 0 0 0.05em #78543a;
+  line-height: 0;
+  padding: 0.75em;
+
+  font-size: 0.8rem;
+  height: 2em;
+  text-transform: uppercase;
+  width: fit-content;
+  margin: 0.5rem;
+  justify-self: right;
+}
+
+.new-sizes {
+  grid-column: 1 / 4;
+  grid-row: 3 / 4;
+  display: grid;
+  grid-template-columns: repeat(10, auto);
+}
+
+.save-close,
+.save-add {
+  border: none;
+  color: black;
+  background-color: var(--blue);
+  border-radius: 0.1em;
+  box-shadow: 0 0 0.05em #78543a;
+  line-height: 0;
+  padding: 0.75em;
+  font-size: 0.8rem;
+  height: 2rem;
+  text-transform: uppercase;
+  width: fit-content;
+  margin: 0.5rem;
+}
+
+.cancel-new {
+  color: var(--blue);
+  background: none;
+  border: none;
+  justify-self: right;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 1.2rem;
+  text-shadow: 0 0 0.05em #78543a;
+}
+.new-sizes label {
+  text-align: left;
+  align-self: center;
+  height: auto;
+  padding-right: 0;
+}
+
+.new-sizes input {
+  height: auto;
+  align-self: center;
+  width: 3rem;
+}
+
 .products {
   grid-column: span 2;
   background-color: var(--offwhite);
@@ -83,6 +234,7 @@ body {
   border-radius: 0.8em;
   box-shadow: 0 0 0.8em -0.4em #342419;
   margin-bottom: 50px;
+  text-transform: uppercase;
 }
 
 .update-product:last-child {
@@ -179,6 +331,7 @@ body {
   padding-bottom: 0.75em;
   font-size: 0.7rem;
   height: 2em;
+  text-transform: uppercase;
 }
 
 .dont-display {
@@ -190,7 +343,7 @@ body {
 }
 
 .sold-out::before {
-  content: "sold out";
+  content: 'sold out';
   position: absolute;
   background-color: #ff2e2e;
   color: white;
