@@ -38,14 +38,9 @@
         <input required placeholder="R0" name="price" type="number" min="0" />
       </div>
       <div class="color-value-set">
-        <label class="required" for="color-value">Select a color:</label>
-        <input name="color-value" type="color" />
+        Select a color:
+        <div class="color-swatches"></div>
       </div>
-      <div class="color-name-set">
-        <label class="required" for="color-name">Give the color a name:</label>
-        <input name="color-name" type="text" />
-      </div>
-      <button class="preview">Preview</button>
 
       <svg class="preview-icon" viewBox="0 0 512 512"></svg>
       <div class="new-sizes">
@@ -58,6 +53,8 @@
       <button class="cancel-new">x</button>
     </div>
     <div class="products"></div>
+
+    <script src="js/color-groups.js" charset="utf-8"></script>
     <script src="js/shoe-data.js" charset="utf-8"></script>
     <script src="js/shoe-catalogue.js" charset="utf-8"></script>
     <script src="js/shoe-stock-update-DOM.js" charset="utf-8"></script>
@@ -78,6 +75,38 @@
           <button class="save-btn dont-display">Save</button>
           <button class="remove-btn">Remove</button>
         </div>
+      {{/each}}
+    </script>
+    <script type="text/x-template" id="swatchTemplate">
+      {{#each pink}}
+      <button style={{{swatchFill this}}} name='pink' value={{this}} class="swatch"></button>
+      {{/each}}
+      {{#each red}}
+      <button style={{{swatchFill this}}} name='red' value={{this}} class="swatch"></button>
+      {{/each}}
+      {{#each orange}}
+      <button style={{{swatchFill this}}} name='orange' value={{this}} class="swatch"></button>
+      {{/each}}
+      {{#each yellow}}
+      <button style={{{swatchFill this}}} name='yellow' value={{this}} class="swatch"></button>
+      {{/each}}
+      {{#each beige}}
+      <button style={{{swatchFill this}}} name='beige' value={{this}} class="swatch"></button>
+      {{/each}}
+      {{#each brown}}
+      <button style={{{swatchFill this}}} name='brown' value={{this}} class="swatch"></button>
+      {{/each}}
+      {{#each gray}}
+      <button style={{{swatchFill this}}} name='gray' value={{this}} class="swatch"></button>
+      {{/each}}
+      {{#each purple}}
+      <button style={{{swatchFill this}}} name='purple' value={{this}} class="swatch"></button>
+      {{/each}}
+      {{#each blue}}
+      <button style={{{swatchFill this}}} name='blue' value={{this}} class="swatch"></button>
+      {{/each}}
+      {{#each green}}
+      <button style={{{swatchFill this}}} name='green' value={{this}} class="swatch"></button>
       {{/each}}
     </script>
   </body>

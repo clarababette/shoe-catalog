@@ -1,14 +1,14 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   //GET SHOP DATA
   let myStock = {};
   let myCart = undefined;
-  if (localStorage['shopData']) {
-    myStock = JSON.parse(localStorage.getItem('shopData'));
+  if (localStorage["shopData"]) {
+    myStock = JSON.parse(localStorage.getItem("shopData"));
   } else {
     myStock = shoeData;
   }
-  if (localStorage['customerCart']) {
-    myCart = JSON.parse(localStorage.getItem('customerCart'));
+  if (localStorage["customerCart"]) {
+    myCart = JSON.parse(localStorage.getItem("customerCart"));
   }
 
   //Initialize shop
@@ -19,52 +19,57 @@ document.addEventListener('DOMContentLoaded', function () {
   const filter = shoeFilter();
 
   //HANDLEBARS HELPERS
-  Handlebars.registerHelper('stockCheck', (productID, size) => {
+  Handlebars.registerHelper("stockCheck", (productID, size) => {
     return myShop.stockCheck(productID, size);
   });
-  Handlebars.registerHelper('viewBox', (brand) => {
+  Handlebars.registerHelper("viewBox", (brand) => {
     switch (brand) {
-      case 'Crocs':
+      case "Crocs":
         return new Handlebars.SafeString("'-5 0 522 380'");
-      case 'Converse':
+      case "Converse":
         return new Handlebars.SafeString("'-5 10 522 400'");
-      case 'Vans':
+      case "Vans":
         return new Handlebars.SafeString("'-5 0 522 380'");
-      case 'Dr Martens':
+      case "Dr Martens":
         return new Handlebars.SafeString("'0 0 522 512'");
-      case 'Nike':
+      case "Nike":
         return new Handlebars.SafeString("'-5 0 522 380'");
     }
   });
 
-  Handlebars.registerHelper('icon', (brand) => {
+  Handlebars.registerHelper("icon", (brand) => {
     switch (brand) {
-      case 'Crocs':
-        return new Handlebars.SafeString('#crocs');
-      case 'Converse':
-        return new Handlebars.SafeString('#converse');
-      case 'Vans':
-        return new Handlebars.SafeString('#vans');
-      case 'Dr Martens':
-        return new Handlebars.SafeString('#drmartens');
-      case 'Nike':
-        return new Handlebars.SafeString('#nike');
+      case "Crocs":
+        return new Handlebars.SafeString("#crocs");
+      case "Converse":
+        return new Handlebars.SafeString("#converse");
+      case "Vans":
+        return new Handlebars.SafeString("#vans");
+      case "Dr Martens":
+        return new Handlebars.SafeString("#drmartens");
+      case "Nike":
+        return new Handlebars.SafeString("#nike");
     }
   });
 
   //CSS RULES FOR STOCK COLORS
   for (productID in myStock) {
-    rule = '.' + productID + ' { --mid: ' + myStock[productID]['color']['value'] + '}';
+    rule =
+      "." +
+      productID +
+      " { --mid: " +
+      myStock[productID]["color"]["value"] +
+      "}";
     document.styleSheets[0].insertRule(rule);
   }
   //STOCK TEMPLATE
-  let stockTemplateSource = document.querySelector('#stockTemplate').innerHTML;
+  let stockTemplateSource = document.querySelector("#stockTemplate").innerHTML;
   let stockTemplate = Handlebars.compile(stockTemplateSource);
-  let shoeStock = document.querySelector('.shoe-stock');
+  let shoeStock = document.querySelector(".shoe-stock");
   let shoes = [];
   for (id in myStock) {
     let shoe = myStock[id];
-    shoe['productID'] = id;
+    shoe["productID"] = id;
     shoes.push(shoe);
   }
   let shoeCards = {};
@@ -72,23 +77,25 @@ document.addEventListener('DOMContentLoaded', function () {
   shoeStock.innerHTML = stockTemplate(shoeCards);
   for (productID in myStock) {
     //INSERT SVG CODE
-    document.querySelector('.' + productID).innerHTML = document.getElementById(productID.split('-')[0]).innerHTML;
+    document.querySelector("." + productID).innerHTML = document.getElementById(
+      productID.split("-")[0]
+    ).innerHTML;
     if (myShop.soldOut(productID)) {
-      document.getElementById(productID).classList.add('sold-out');
+      document.getElementById(productID).classList.add("sold-out");
     }
   }
 
   //document.querySelector('.crocs-blue').innerHTML = document.getElementById('crocs').innerHTML;
 
   //CART TEMPLATE
-  let cartTemplateSource = document.querySelector('#cartTemplate').innerHTML;
+  let cartTemplateSource = document.querySelector("#cartTemplate").innerHTML;
   let cartTemplate = Handlebars.compile(cartTemplateSource);
-  let cart = document.querySelector('.my-cart');
+  let cart = document.querySelector(".my-cart");
   if (myCart) {
     let items = [];
     for (id in myCart) {
       let item = myCart[id];
-      item['itemID'] = id;
+      item["itemID"] = id;
       items.push(item);
     }
     let cartItems = {};
@@ -96,7 +103,7 @@ document.addEventListener('DOMContentLoaded', function () {
     cart.innerHTML = cartTemplate(cartItems);
     myShop.setCart(myCart);
   } else {
-    document.querySelector('.cart').classList.add('empty-cart');
+    document.querySelector(".cart").classList.add("empty-cart");
   }
 
   //SEARCH TEMPLATE
@@ -108,79 +115,121 @@ document.addEventListener('DOMContentLoaded', function () {
     colors: filter.getAllColors(),
   };
 
-  let searchTemplateSource = document.querySelector('#searchTemplate').innerHTML;
+  let searchTemplateSource =
+    document.querySelector("#searchTemplate").innerHTML;
   let searchTemplate = Handlebars.compile(searchTemplateSource);
-  let search = document.querySelector('.search');
+  let search = document.querySelector(".search");
   search.innerHTML = searchTemplate(filterOptions);
 
-  const shoesAvailable = document.querySelector('.shoe-stock');
-  shoesAvailable.addEventListener('click', (click) => {
+  const shoesAvailable = document.querySelector(".shoe-stock");
+  shoesAvailable.addEventListener("click", (click) => {
     let sizeBtn = undefined;
     let addBtn = undefined;
 
-    if (click.target.classList.contains('in-stock')) {
+    if (click.target.classList.contains("in-stock")) {
       sizeBtn = click.target;
     }
-    if (click.target.classList.contains('add-shoe')) {
+    if (click.target.classList.contains("add-shoe")) {
       addBtn = click.target;
     }
 
     if (sizeBtn) {
-      let sizeInStock = document.querySelectorAll('#' + sizeBtn.name + ' .in-stock');
+      let sizeInStock = document.querySelectorAll(
+        "#" + sizeBtn.name + " .in-stock"
+      );
       sizeInStock.forEach((otherBtns) => {
-        otherBtns.classList.remove('selected-size');
+        otherBtns.classList.remove("selected-size");
       });
-      sizeBtn.classList.add('selected-size');
+      sizeBtn.classList.add("selected-size");
       productID = sizeBtn.name;
-      itemID = sizeBtn.name + '-' + sizeBtn.value;
+      itemID = sizeBtn.name + "-" + sizeBtn.value;
 
       let qtyInStock = myShop.stockLevel(productID, sizeBtn.value);
 
       if (qtyInStock == 0) {
-        document.querySelector('#' + productID + ' .stock-level').innerHTML = 'Out of stock!';
+        document.querySelector("#" + productID + " .stock-level").innerHTML =
+          "Out of stock!";
       } else {
-        document.querySelector('#' + productID + ' .stock-level').innerHTML = qtyInStock + ' left in stock';
+        document.querySelector("#" + productID + " .stock-level").innerHTML =
+          qtyInStock + " left in stock";
       }
     }
 
     if (addBtn) {
-      document.querySelector('.cart').classList.remove('checked-out-cart');
-      document.querySelector('.cart').classList.remove('cleared-cart');
+      document.querySelector(".cart").classList.remove("checked-out-cart");
+      document.querySelector(".cart").classList.remove("cleared-cart");
       let productID = addBtn.parentElement.parentElement.id;
-      let selectedSize = document.querySelector('#' + productID + ' .selected-size');
+      let selectedSize = document.querySelector(
+        "#" + productID + " .selected-size"
+      );
 
       if (selectedSize == null) {
-        document.querySelector('#' + productID + ' .stock-level').innerHTML = 'Please select a size.';
+        document.querySelector("#" + productID + " .stock-level").innerHTML =
+          "Please select a size.";
       } else {
-        let itemID = productID + '-' + selectedSize.value;
+        let itemID = productID + "-" + selectedSize.value;
         let cart = myShop.addToCart(productID, itemID);
         let cartItemElem = document.getElementById(itemID);
-        document.querySelector('.cart').classList.remove('empty-cart');
+        document.querySelector(".cart").classList.remove("empty-cart");
         if (cartItemElem === null) {
           newCartItem(itemID);
-          document.querySelector('#' + itemID + ' .cart-brand').innerHTML = cart[itemID]['brand'];
-          document.querySelector('#' + itemID + ' .cart-color').innerHTML = cart[itemID]['color'];
-          document.querySelector('#' + itemID + ' .cart-size').innerHTML = 'Size: ' + selectedSize.innerHTML;
-          document.querySelector('#' + itemID + ' .cart-qty').innerHTML = 'Qty: ' + cart[itemID]['qty'];
-          document.querySelector('#' + itemID + ' .cart-price').innerHTML = 'R' + cart[itemID]['unitPrice'] * cart[itemID]['qty'];
-          cart[itemID]['size'] = selectedSize.innerHTML;
-          cart[itemID]['subTotal'] = cart[itemID]['unitPrice'] * cart[itemID]['qty'];
+          document.querySelector("#" + itemID + " .cart-brand").innerHTML =
+            cart[itemID]["brand"];
+          document.querySelector("#" + itemID + " .cart-color").innerHTML =
+            cart[itemID]["color"];
+          document.querySelector("#" + itemID + " .cart-size").innerHTML =
+            "Size: " + selectedSize.innerHTML;
+          document.querySelector("#" + itemID + " .cart-qty").innerHTML =
+            "Qty: " + cart[itemID]["qty"];
+          document.querySelector("#" + itemID + " .cart-price").innerHTML =
+            "R" + cart[itemID]["unitPrice"] * cart[itemID]["qty"];
+          cart[itemID]["size"] = selectedSize.innerHTML;
+          cart[itemID]["subTotal"] =
+            cart[itemID]["unitPrice"] * cart[itemID]["qty"];
         } else {
-          document.querySelector('#' + itemID + ' .cart-qty').innerHTML = 'Qty: ' + cart[itemID]['qty'];
-          document.querySelector('#' + itemID + ' .cart-price').innerHTML = 'R' + cart[itemID]['unitPrice'] * cart[itemID]['qty'];
-          cart[itemID]['subTotal'] = cart[itemID]['unitPrice'] * cart[itemID]['qty'];
+          document.querySelector("#" + itemID + " .cart-qty").innerHTML =
+            "Qty: " + cart[itemID]["qty"];
+          document.querySelector("#" + itemID + " .cart-price").innerHTML =
+            "R" + cart[itemID]["unitPrice"] * cart[itemID]["qty"];
+          cart[itemID]["subTotal"] =
+            cart[itemID]["unitPrice"] * cart[itemID]["qty"];
         }
-        document.querySelector('.total-cost').innerHTML = 'Total: R' + myShop.getTotalCost();
+        document.querySelector(".total-cost").innerHTML =
+          "Total: R" + myShop.getTotalCost();
         stockIndicator(productID, selectedSize);
-        localStorage.setItem('shopData', JSON.stringify(myShop.getStock()));
-        localStorage.setItem('customerCart', JSON.stringify(myShop.getCart()));
+        localStorage.setItem("shopData", JSON.stringify(myShop.getStock()));
+        localStorage.setItem("customerCart", JSON.stringify(myShop.getCart()));
       }
       for (productID in myStock) {
         if (myShop.soldOut(productID)) {
-          document.getElementById(productID).classList.add('sold-out');
+          document.getElementById(productID).classList.add("sold-out");
         } else {
-          document.getElementById(productID).classList.remove('sold-out');
+          document.getElementById(productID).classList.remove("sold-out");
         }
+      }
+    }
+  });
+
+  document.querySelector(".view-filter").addEventListener("click", () => {
+    let filter = document.querySelector(".search");
+
+    if (filter.style.visibility == "hidden") {
+      filter.style.visibility = "visible";
+    } else {
+      filter.style.visibility = "hidden";
+    }
+  });
+
+  document.querySelector(".view-cart").addEventListener("click", () => {
+    let cart = document.querySelector(".cart");
+    let cartBefore = document.querySelector(".cleared-cart.cart::before");
+
+    if (cart.style.visibility == "hidden") {
+      cart.style.visibility = "visible";
+    } else {
+      cart.style.visibility = "hidden";
+      if (cartBefore) {
+        cartBefore.style.visibility = "hidden";
       }
     }
   });
@@ -188,64 +237,71 @@ document.addEventListener('DOMContentLoaded', function () {
   const stockIndicator = (productID, selectedSize) => {
     let qtyInStock = myShop.stockLevel(productID, selectedSize.value);
     if (qtyInStock == 0) {
-      document.querySelector('#' + productID + ' .stock-level').innerHTML = '';
+      document.querySelector("#" + productID + " .stock-level").innerHTML = "";
 
-      selectedSize.classList.remove('selected-size');
-      selectedSize.classList.remove('in-stock');
-      selectedSize.classList.add('out-of-stock');
+      selectedSize.classList.remove("selected-size");
+      selectedSize.classList.remove("in-stock");
+      selectedSize.classList.add("out-of-stock");
     } else {
-      selectedSize.classList.add('selected-size');
-      selectedSize.classList.add('in-stock');
-      selectedSize.classList.remove('out-of-stock');
-      document.querySelector('#' + productID + ' .stock-level').innerHTML = qtyInStock + ' left in stock';
+      selectedSize.classList.add("selected-size");
+      selectedSize.classList.add("in-stock");
+      selectedSize.classList.remove("out-of-stock");
+      document.querySelector("#" + productID + " .stock-level").innerHTML =
+        qtyInStock + " left in stock";
     }
   };
 
   const newCartItem = (itemID) => {
-    let cartItem = document.createElement('div');
+    let cartItem = document.createElement("div");
     cartItem.id = itemID;
-    cartItem.classList.add('in-cart');
-    let fields = ['cart-brand', 'cart-color', 'cart-size', 'cart-qty', 'cart-price'];
+    cartItem.classList.add("in-cart");
+    let fields = [
+      "cart-brand",
+      "cart-color",
+      "cart-size",
+      "cart-qty",
+      "cart-price",
+    ];
     fields.forEach((field) => {
-      let elem = document.createElement('div');
+      let elem = document.createElement("div");
       elem.classList.add(field);
       cartItem.appendChild(elem);
     });
-    let incBtn = document.createElement('button');
-    incBtn.classList.add('increase-qty');
-    incBtn.innerHTML = '+';
+    let incBtn = document.createElement("button");
+    incBtn.classList.add("increase-qty");
+    incBtn.innerHTML = "+";
     cartItem.appendChild(incBtn);
-    let decrBtn = document.createElement('button');
-    decrBtn.classList.add('decrease-qty');
-    decrBtn.innerHTML = '—';
+    let decrBtn = document.createElement("button");
+    decrBtn.classList.add("decrease-qty");
+    decrBtn.innerHTML = "—";
     cartItem.appendChild(decrBtn);
-    let deleteBtn = document.createElement('button');
-    deleteBtn.classList.add('delete-item');
-    deleteBtn.innerHTML = 'x';
+    let deleteBtn = document.createElement("button");
+    deleteBtn.classList.add("delete-item");
+    deleteBtn.innerHTML = "x";
     cartItem.appendChild(deleteBtn);
-    document.querySelector('.my-cart').appendChild(cartItem);
+    document.querySelector(".my-cart").appendChild(cartItem);
   };
 
-  const cartElem = document.querySelector('.cart');
-  cartElem.addEventListener('click', (click) => {
+  const cartElem = document.querySelector(".cart");
+  cartElem.addEventListener("click", (click) => {
     let incBtn = undefined;
     let decrBtn = undefined;
     let deleteBtn = undefined;
     let checkOutBtn = undefined;
     let clearCartBtn = undefined;
-    if (click.target.classList.contains('increase-qty')) {
+    if (click.target.classList.contains("increase-qty")) {
       incBtn = click.target;
     }
-    if (click.target.classList.contains('decrease-qty')) {
+    if (click.target.classList.contains("decrease-qty")) {
       decrBtn = click.target;
     }
-    if (click.target.classList.contains('delete-item')) {
+    if (click.target.classList.contains("delete-item")) {
       deleteBtn = click.target;
     }
-    if (click.target.classList.contains('checkout')) {
+    if (click.target.classList.contains("checkout")) {
       checkOutBtn = click.target;
     }
-    if (click.target.classList.contains('clear-cart')) {
+    if (click.target.classList.contains("clear-cart")) {
       clearCartBtn = click.target;
     }
 
@@ -254,7 +310,9 @@ document.addEventListener('DOMContentLoaded', function () {
       let itemID = cartItem.id;
       let productID = myShop.getProductFromItem(itemID);
       let size = myShop.getSizeFromItem(itemID);
-      let sizeBtn = document.querySelector('#' + productID + ' [value="' + size + '"]');
+      let sizeBtn = document.querySelector(
+        "#" + productID + ' [value="' + size + '"]'
+      );
       let cart = myShop.getCart();
 
       if (incBtn) {
@@ -264,84 +322,99 @@ document.addEventListener('DOMContentLoaded', function () {
         cart = myShop.returnItems(itemID, 1);
       }
       if (deleteBtn) {
-        cart = myShop.returnItems(itemID, cart[itemID]['qty']);
+        cart = myShop.returnItems(itemID, cart[itemID]["qty"]);
       }
 
       if (cart[itemID]) {
-        document.querySelector('#' + itemID + ' .cart-qty').innerHTML = 'Qty: ' + cart[itemID]['qty'];
-        document.querySelector('#' + itemID + ' .cart-price').innerHTML = 'R' + cart[itemID]['unitPrice'] * cart[itemID]['qty'];
-        cart[itemID]['subTotal'] = cart[itemID]['unitPrice'] * cart[itemID]['qty'];
+        document.querySelector("#" + itemID + " .cart-qty").innerHTML =
+          "Qty: " + cart[itemID]["qty"];
+        document.querySelector("#" + itemID + " .cart-price").innerHTML =
+          "R" + cart[itemID]["unitPrice"] * cart[itemID]["qty"];
+        cart[itemID]["subTotal"] =
+          cart[itemID]["unitPrice"] * cart[itemID]["qty"];
       } else {
         cartItem.remove();
       }
-      console.log(myShop.getCart());
+
       if (Object.entries(myShop.getCart()).length == 0) {
-        document.querySelector('.total-cost').innerHTML = 'is empty!';
+        document.querySelector(".total-cost").innerHTML = "is empty!";
       } else {
-        document.querySelector('.total-cost').innerHTML = 'Total: R' + myShop.getTotalCost();
+        document.querySelector(".total-cost").innerHTML =
+          "Total: R" + myShop.getTotalCost();
       }
 
       let qtyInStock = myShop.stockLevel(productID, size);
       if (qtyInStock == 0) {
-        sizeBtn.classList.remove('in-stock');
-        sizeBtn.classList.add('out-of-stock');
-        document.querySelector('#' + itemID + ' .increase-qty').classList.add('no-more');
+        sizeBtn.classList.remove("in-stock");
+        sizeBtn.classList.add("out-of-stock");
+        document
+          .querySelector("#" + itemID + " .increase-qty")
+          .classList.add("no-more");
       } else {
-        sizeBtn.classList.add('in-stock');
-        sizeBtn.classList.remove('out-of-stock');
-        if (document.querySelector('#' + itemID + ' .increase-qty')) {
-          document.querySelector('#' + itemID + ' .increase-qty').classList.remove('no-more');
+        sizeBtn.classList.add("in-stock");
+        sizeBtn.classList.remove("out-of-stock");
+        if (document.querySelector("#" + itemID + " .increase-qty")) {
+          document
+            .querySelector("#" + itemID + " .increase-qty")
+            .classList.remove("no-more");
         }
       }
 
-      if (sizeBtn.classList.contains('selected-size')) {
-        sizeBtn.classList.remove('selected-size');
-        document.querySelector('#' + productID + ' .stock-level').innerHTML = '';
+      if (sizeBtn.classList.contains("selected-size")) {
+        sizeBtn.classList.remove("selected-size");
+        document.querySelector("#" + productID + " .stock-level").innerHTML =
+          "";
       }
-      localStorage.setItem('shopData', JSON.stringify(myShop.getStock()));
-      localStorage.setItem('customerCart', JSON.stringify(myShop.getCart()));
+      localStorage.setItem("shopData", JSON.stringify(myShop.getStock()));
+      localStorage.setItem("customerCart", JSON.stringify(myShop.getCart()));
       if (myShop.soldOut(productID)) {
-        document.getElementById(productID).classList.add('sold-out');
+        document.getElementById(productID).classList.add("sold-out");
       } else {
-        document.getElementById(productID).classList.remove('sold-out');
+        document.getElementById(productID).classList.remove("sold-out");
       }
     }
     //CHECK-OUT CART
     if (checkOutBtn) {
-      localStorage.removeItem('customerCart');
-      localStorage.setItem('shopData', JSON.stringify(myShop.getStock()));
+      localStorage.removeItem("customerCart");
+      localStorage.setItem("shopData", JSON.stringify(myShop.getStock()));
       myShop.setCart({});
-      document.querySelector('.cart').classList.add('checked-out-cart');
-      document.querySelector('.my-cart').innerHTML = '';
+      document.querySelector(".cart").classList.add("checked-out-cart");
+      document.querySelector(".my-cart").innerHTML = "";
     }
 
     if (clearCartBtn) {
       cart = myShop.getCart();
       for (itemID in cart) {
-        myShop.returnItems(itemID, cart[itemID]['qty']);
+        myShop.returnItems(itemID, cart[itemID]["qty"]);
       }
 
-      document.querySelector('.my-cart').innerHTML = '';
-      document.querySelector('.cart').classList.add('cleared-cart');
-      localStorage.removeItem('customerCart');
-      localStorage.setItem('shopData', JSON.stringify(myShop.getStock()));
+      document.querySelector(".my-cart").innerHTML = "";
+      document.querySelector(".cart").classList.add("cleared-cart");
+      localStorage.removeItem("customerCart");
+      localStorage.setItem("shopData", JSON.stringify(myShop.getStock()));
       for (productID in myStock) {
         if (myShop.soldOut(productID)) {
-          document.getElementById(productID).classList.add('sold-out');
+          document.getElementById(productID).classList.add("sold-out");
         } else {
-          document.getElementById(productID).classList.remove('sold-out');
+          document.getElementById(productID).classList.remove("sold-out");
         }
       }
     }
   });
 
   // //FILTER
-  const filterBtn = document.querySelector('.filter');
-  filterBtn.addEventListener('click', () => {
-    document.querySelector('.shoe-stock').classList.remove('no-matches');
-    const selectedBrands = document.querySelectorAll('input[name="brand"]:checked');
-    const selectedSizes = document.querySelectorAll('input[name="size"]:checked');
-    const selectedColors = document.querySelectorAll('input[name="color"]:checked');
+  const filterBtn = document.querySelector(".filter");
+  filterBtn.addEventListener("click", () => {
+    document.querySelector(".shoe-stock").classList.remove("no-matches");
+    const selectedBrands = document.querySelectorAll(
+      'input[name="brand"]:checked'
+    );
+    const selectedSizes = document.querySelectorAll(
+      'input[name="size"]:checked'
+    );
+    const selectedColors = document.querySelectorAll(
+      'input[name="color"]:checked'
+    );
     let filterOptions = {
       brands: filter.getAllBrands(),
       sizes: filter.getAllSizes(),
@@ -365,22 +438,22 @@ document.addEventListener('DOMContentLoaded', function () {
     filter.setCriteria(brands, sizes, colors);
     let matches = filter.getResults();
     if (matches.length == 0) {
-      document.querySelector('.shoe-stock').classList.add('no-matches');
+      document.querySelector(".shoe-stock").classList.add("no-matches");
     }
-    let shoeCards = document.querySelectorAll('.shoe-card');
+    let shoeCards = document.querySelectorAll(".shoe-card");
     shoeCards.forEach((card) => {
       if (!matches.includes(card.id)) {
-        card.style.display = 'none';
+        card.style.display = "none";
       } else {
-        card.style.display = 'inline-flex';
+        card.style.display = "inline-flex";
       }
     });
   });
 
   // //FILTER RESET - done
-  const clearFilterBtn = document.querySelector('.clear-filter');
-  clearFilterBtn.addEventListener('click', () => {
-    document.querySelector('.shoe-stock').classList.remove('no-matches');
+  const clearFilterBtn = document.querySelector(".clear-filter");
+  clearFilterBtn.addEventListener("click", () => {
+    document.querySelector(".shoe-stock").classList.remove("no-matches");
     const brands = document.querySelectorAll('input[name="brand"]');
     const sizes = document.querySelectorAll('input[name="size"]');
     const colors = document.querySelectorAll('input[name="color"]');
@@ -394,9 +467,9 @@ document.addEventListener('DOMContentLoaded', function () {
     colors.forEach((checkbox) => {
       checkbox.checked = false;
     });
-    let shoeCards = document.querySelectorAll('.shoe-card');
+    let shoeCards = document.querySelectorAll(".shoe-card");
     shoeCards.forEach((card) => {
-      card.style.display = 'inline-flex';
+      card.style.display = "inline-flex";
     });
   });
 }); //DOM CONTENT LOADED CLOSE

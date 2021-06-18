@@ -14,7 +14,7 @@ function shoeFilter() {
   function setOptions(allShoes) {
     for (id in allShoes) {
       let shoe = allShoes[id];
-      let sizes = Object.getOwnPropertyNames(shoe["stock"]);
+      let sizes = Object.getOwnPropertyNames(shoe['stock']);
       let soldOut = function () {
         let x = true;
         sizes.forEach((size) => {
@@ -24,35 +24,35 @@ function shoeFilter() {
         });
         return x;
       };
-      let x = id.split("-");
+      let x = id.split('-');
       if (!allBrands[x[0]] && !soldOut()) {
         //let value = x[0];
 
         allBrands[x[0]] = shoe.brand;
       }
-      if (!allColors.includes(shoe["color"]["name"]) && !soldOut()) {
-        allColors.push(shoe["color"]["name"]);
+      if (!allColors.includes(shoe['color']['name']) && !soldOut()) {
+        allColors.push(shoe['color']['name']);
       }
 
       sizes.forEach((size) => {
-        if (shoe["stock"][size] > 0 && !allSizes[size]) {
+        if (shoe['stock'][size] > 0 && !allSizes[size]) {
           switch (size) {
-            case "three":
+            case 'three':
               allSizes[size] = 3;
               break;
-            case "four":
+            case 'four':
               allSizes[size] = 4;
               break;
-            case "five":
+            case 'five':
               allSizes[size] = 5;
               break;
-            case "six":
+            case 'six':
               allSizes[size] = 6;
               break;
-            case "seven":
+            case 'seven':
               allSizes[size] = 7;
               break;
-            case "eight":
+            case 'eight':
               allSizes[size] = 8;
               break;
             default:
@@ -85,19 +85,19 @@ function shoeFilter() {
     let matches = Object.keys(stock);
     if (searchBrands.length > 0) {
       matches = matches.filter((product) => {
-        return searchBrands.includes(stock[product]["brand"]);
+        return searchBrands.includes(stock[product]['brand']);
       });
     }
     if (searchColors.length > 0) {
       matches = matches.filter((product) => {
-        return searchColors.includes(stock[product]["color"]["name"]);
+        return searchColors.includes(stock[product]['color']['name']);
       });
     }
     if (searchSizes.length > 0) {
       matches = matches.filter((product) => {
         let match = false;
         searchSizes.forEach((size) => {
-          if (stock[product]["stock"][size] > 0) {
+          if (stock[product]['stock'][size] > 0) {
             match = true;
           }
         });
@@ -123,19 +123,16 @@ function shoeShop() {
   let cart = {};
 
   function stockCheck(productID, size) {
-    if (
-      stock.hasOwnProperty(productID) &&
-      stock[productID]["stock"][size] > 0
-    ) {
-      return "in-stock";
+    if (stock.hasOwnProperty(productID) && stock[productID]['stock'][size] > 0) {
+      return 'in-stock';
     } else {
-      return "out-of-stock";
+      return 'out-of-stock';
     }
   }
   function soldOut(productID) {
     let productSoldOut = true;
-    for (size in stock[productID]["stock"]) {
-      if (stock[productID]["stock"][size] > 0) {
+    for (let size in stock[productID]['stock']) {
+      if (stock[productID]['stock'][size] > 0) {
         productSoldOut = false;
       }
     }
@@ -159,7 +156,7 @@ function shoeShop() {
   }
 
   function stockLevel(product, size) {
-    return stock[product]["stock"][size];
+    return stock[product]['stock'][size];
   }
 
   function getCurrentShoe() {
@@ -168,30 +165,30 @@ function shoeShop() {
 
   function addToCart(productID, itemID) {
     let product = stock[productID];
-    let size = itemID.split("-")[2];
-    if (product["stock"][size] != 0) {
+    let size = itemID.split('-')[2];
+    if (product['stock'][size] != 0) {
       if (cart[itemID]) {
         incItemQty(itemID);
       } else {
         cart[itemID] = {};
-        cart[itemID]["brand"] = product["brand"];
-        cart[itemID]["color"] = product["color"]["name"];
-        cart[itemID]["unitPrice"] = product["price"];
-        cart[itemID]["qty"] = 1;
+        cart[itemID]['brand'] = product['brand'];
+        cart[itemID]['color'] = product['color']['name'];
+        cart[itemID]['unitPrice'] = product['price'];
+        cart[itemID]['qty'] = 1;
       }
-      product["stock"][size]--;
+      product['stock'][size]--;
     }
     return cart;
   }
 
   function incItemQty(itemID) {
-    cart[itemID]["qty"]++;
+    cart[itemID]['qty']++;
   }
 
   function getTotalCost() {
     let totalCost = 0;
-    for (item in cart) {
-      let subTotal = cart[item]["qty"] * cart[item]["unitPrice"];
+    for (let item in cart) {
+      let subTotal = cart[item]['qty'] * cart[item]['unitPrice'];
       totalCost += subTotal;
     }
     return totalCost;
@@ -200,7 +197,7 @@ function shoeShop() {
   function updateStock() {
     stock.forEach((shoe) => {
       if (shoe.colorname == color) {
-        shoe["stock"][size]--;
+        shoe['stock'][size]--;
       }
     });
   }
@@ -214,43 +211,30 @@ function shoeShop() {
   }
 
   function returnItems(itemID, qty) {
-    product = stock[getProductFromItem(itemID)];
-    cart[itemID]["qty"] -= qty;
-    let size = itemID.split("-")[2];
-    product["stock"][size] += qty;
-    if (cart[itemID]["qty"] == 0) {
+    let product = stock[getProductFromItem(itemID)];
+    cart[itemID]['qty'] -= qty;
+    let size = itemID.split('-')[2];
+    product['stock'][size] += qty;
+    if (cart[itemID]['qty'] == 0) {
       delete cart[itemID];
     }
     return cart;
   }
 
   function getProductFromItem(itemID) {
-    let productID = itemID.split("-")[0] + "-" + itemID.split("-")[1];
+    let productID = itemID.split('-')[0] + '-' + itemID.split('-')[1];
     return productID;
   }
 
   function getSizeFromItem(itemID) {
-    return itemID.split("-")[2];
-  }
-
-  function returnToStock() {
-    while (cart["shoe"].length > 0) {
-      cartShoe = cart["shoe"][0];
-      stock.forEach((shoe) => {
-        if (shoe.colorname == cartShoe.colorname) {
-          shoe["stock"][cartShoe.size] += cartShoe.qty;
-          cart.shoe.shift();
-        }
-      });
-    }
-    cart.total = 0;
+    return itemID.split('-')[2];
   }
 
   function getQty() {
-    let qty = "";
-    cart["shoe"].forEach((shoe) => {
+    let qty = '';
+    cart['shoe'].forEach((shoe) => {
       if (currentShoe.colorname == shoe.colorname && size == shoe.size) {
-        qty = shoe["qty"].toString();
+        qty = shoe['qty'].toString();
       }
     });
     return qty;
@@ -268,7 +252,6 @@ function shoeShop() {
     getStock,
     updateStock,
     getCart,
-    returnToStock,
     getQty,
     stockCheck,
     getProductFromItem,
@@ -290,18 +273,18 @@ function stockUpdate() {
   }
 
   function getQtyInStock(product, size) {
-    return stock[product]["stock"][size];
+    return stock[product]['stock'][size];
   }
 
   function setQtyInStock(product, size, qty) {
-    stock[product]["stock"][size] = qty;
+    stock[product]['stock'][size] = qty;
   }
 
   function getPrice(product) {
-    return stock[product]["price"];
+    return stock[product]['price'];
   }
   function setPrice(product, price) {
-    stock[product]["price"] = price;
+    stock[product]['price'] = price;
   }
   function removeProduct(product) {
     delete stock[product];
@@ -309,8 +292,8 @@ function stockUpdate() {
 
   function soldOut(productID) {
     let productSoldOut = true;
-    for (size in stock[productID]["stock"]) {
-      if (stock[productID]["stock"][size] > 0) {
+    for (let size in stock[productID]['stock']) {
+      if (stock[productID]['stock'][size] > 0) {
         productSoldOut = false;
       }
     }
@@ -318,7 +301,7 @@ function stockUpdate() {
   }
 
   function addNewProductID(brandID, colorName) {
-    let productID = brandID + "-" + colorName.toLowerCase();
+    let productID = brandID + '-' + colorName.toLowerCase();
     stock[productID] = {
       color: {},
       stock: {},
@@ -327,17 +310,17 @@ function stockUpdate() {
   }
 
   function setBrand(productID, brand) {
-    if (brand == "drmartens") {
-      brand = "Dr Martens";
+    if (brand == 'drmartens') {
+      brand = 'Dr Martens';
     } else {
       brand = brand.replace(brand[0], brand[0].toUpperCase());
     }
-    stock[productID]["brand"] = brand;
+    stock[productID]['brand'] = brand;
   }
 
   function setColor(productID, colorName, colorValue) {
-    stock[productID]["color"]["name"] = colorName;
-    stock[productID]["color"]["value"] = colorValue;
+    stock[productID]['color']['name'] = colorName;
+    stock[productID]['color']['value'] = colorValue;
   }
 
   return {

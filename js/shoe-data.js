@@ -188,11 +188,11 @@ const shoeData = {
     },
     price: 600,
     stock: {
-      four: 1,
-      five: 3,
-      six: 5,
-      seven: 3,
-      eight: 1,
+      four: 0,
+      five: 0,
+      six: 0,
+      seven: 0,
+      eight: 0,
     },
   },
   'nike-blue': {

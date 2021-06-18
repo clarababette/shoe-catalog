@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const updateMyStock = stockUpdate();
+
   updateMyStock.setStock(myStock);
 
   Handlebars.registerHelper('viewBox', (brand) => {
@@ -22,6 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
       case 'Nike':
         return new Handlebars.SafeString("'-5 0 522 380'");
     }
+  });
+
+  Handlebars.registerHelper('swatchFill', (color) => {
+    let background = 'background-color: ' + color;
+    return new Handlebars.SafeString('"' + background + '"');
   });
 
   function createProductElement() {
@@ -54,6 +60,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   createProductElement();
+
+  let swatchTemplateSource = document.querySelector('#swatchTemplate').innerHTML;
+  let swatchTemplate = Handlebars.compile(swatchTemplateSource);
+  let swatches = document.querySelector('.color-swatches');
+  swatches.innerHTML = swatchTemplate(colorGroups);
 
   let products = document.querySelector('.products');
   let newShoeBtn = document.querySelector('.new-product');
@@ -135,21 +146,31 @@ document.addEventListener('DOMContentLoaded', function () {
 
   //NEW PRODUCT
 
-  let previewBtn = document.querySelector('.preview');
-  previewBtn.addEventListener('click', () => {
-    let colorValue = document.querySelector('input[name="color-value"]').value;
+  document.querySelector('.brand-selection select').addEventListener('change', () => {
+    let brand = document.querySelector('.brand-selection select').value;
+    let icon = document.querySelector('.preview-icon');
+    icon.innerHTML = document.getElementById(brand).innerHTML;
+  });
+
+  let selectedColorHex = '';
+  let selectedColor = '';
+
+  //let swatches = document.querySelector('.color-swatches');
+  swatches.addEventListener('click', (click) => {
+    let colorValue = click.target.value;
     let brand = document.querySelector('.brand-selection select').value;
     let icon = document.querySelector('.preview-icon');
     icon.innerHTML = document.getElementById(brand).innerHTML;
     icon.style.fill = colorValue;
     icon.style.visibility = 'visible';
+    selectedColorHex = colorValue;
+    selectedColor = click.target.name;
   });
 
   function createNewShoe() {
     let brand = document.querySelector('.brand-selection select').value;
-    let colorName = document.querySelector('input[name="color-name"]').value;
-    let colorValue = document.querySelector('input[name="color-value"]').value;
-    console.log(colorValue);
+    let colorValue = selectedColorHex;
+    let colorName = selectedColor;
     let price = document.querySelector('input[name="price"]').value;
     let sizeInputs = document.querySelectorAll('.new-sizes input');
     let productID = updateMyStock.addNewProductID(brand, colorName);
@@ -157,13 +178,14 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(updateMyStock.getStock());
     updateMyStock.setColor(productID, colorName, colorValue);
     updateMyStock.setPrice(productID, price);
+
     sizeInputs.forEach((size) => {
       console.log(size);
       updateMyStock.setQtyInStock(productID, size.name, size.value);
       size.value = '';
     });
     localStorage.setItem('shopData', JSON.stringify(updateMyStock.getStock()));
-    document.querySelector('input[name="color-name"]').value = '';
+
     document.querySelector('input[name="price"]').value = '';
     let icon = document.querySelector('.preview-icon');
     icon.style.visibility = 'hidden';
